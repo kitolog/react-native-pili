@@ -1,2 +1,2 @@
-#Pili Cloud React Native SDK
+#Pili Streaming Cloud React Native SDK
 
