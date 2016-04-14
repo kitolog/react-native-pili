@@ -1,2 +1,2 @@
-# react-native-pili
-Pili Cloud React Native SDK
+#Pili Cloud React Native SDK
+
