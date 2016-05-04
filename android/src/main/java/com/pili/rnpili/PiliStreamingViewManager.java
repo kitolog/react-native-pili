@@ -13,6 +13,7 @@ import com.pili.pldroid.streaming.CameraStreamingManager;
 import com.pili.pldroid.streaming.CameraStreamingSetting;
 import com.pili.pldroid.streaming.MicrophoneStreamingSetting;
 import com.pili.pldroid.streaming.StreamStatusCallback;
+
 import com.pili.pldroid.streaming.StreamingProfile;
 import com.pili.pldroid.streaming.widget.AspectFrameLayout;
 import com.qiniu.android.dns.DnsManager;

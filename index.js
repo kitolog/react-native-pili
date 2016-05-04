@@ -3,7 +3,8 @@
  */
 var ReactNative = {
   // Components
-  Streaming: require('./Streaming')
+  Streaming: require('./Streaming'),
+  Player:require('./Player')
 }
 
 module.exports = ReactNative;
