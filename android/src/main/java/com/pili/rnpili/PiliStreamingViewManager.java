@@ -6,7 +6,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 
-import com.facebook.react.uimanager.ReactProp;
+import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.pili.pldroid.streaming.CameraStreamingManager;
@@ -188,7 +188,8 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
 
         mCameraStreamingManager = new CameraStreamingManager(context, view, previewFrameView, CameraStreamingManager.EncodingType.SW_VIDEO_WITH_SW_AUDIO_CODEC);  // soft codec
         mCameraStreamingManager.setStreamingStateListener(this);
-        mCameraStreamingManager.prepare(setting, microphoneSetting, mProfile);
+        boolean result = mCameraStreamingManager.prepare(setting, microphoneSetting, mProfile);
+        System.out.println(result);
     }
 
 
