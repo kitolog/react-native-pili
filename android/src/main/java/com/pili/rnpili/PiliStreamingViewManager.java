@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 
 import com.facebook.react.bridge.LifecycleEventListener;
 import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
@@ -38,6 +39,8 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 /**
  * Created by buhe on 16/4/29.
  */
@@ -59,10 +62,11 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
     protected static final int MSG_STOP_STREAMING = 1;
     private static final int MSG_SET_ZOOM = 2;
     private static final int MSG_MUTE = 3;
+    private static final int ZOOM_MINIMUM_WAIT_MILLIS = 33; //ms
 
     protected CameraStreamingManager mCameraStreamingManager;
-    protected String mStatusMsgContent;
     protected boolean mIsReady = false;
+
     private int mCurrentZoom = 0;
     private int mMaxZoom = 0;
     private StreamingProfile mProfile;
@@ -72,7 +76,7 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
 
 
     private void initializeStreamingSessionIfNeeded(AspectFrameLayout afl, CameraPreviewFrameView previewFrameView) {
-        if(mCameraStreamingManager == null){
+        if (mCameraStreamingManager == null) {
             mCameraStreamingManager = new CameraStreamingManager(
                     context,
                     afl,
@@ -130,7 +134,7 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
         previewFrameView.setListener(this);
         previewFrameView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         afl.addView(previewFrameView);
-        initializeStreamingSessionIfNeeded(afl,previewFrameView);
+        initializeStreamingSessionIfNeeded(afl, previewFrameView);
 
         afl.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
             @Override
@@ -189,7 +193,7 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
                 case MSG_SET_ZOOM:
                     mCameraStreamingManager.setZoomValue(mCurrentZoom);
                     break;
-                case MSG_MUTE:
+                case MSG_MUTE:  //外部设置,不需要提供了
 //                    mIsNeedMute = !mIsNeedMute;
 //                    mCameraStreamingManager.mute(mIsNeedMute);
 //                    updateMuteButtonText();
@@ -201,8 +205,20 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
     };
 
     protected void startStreaming() {
+//        if (!streaming) {
         mHandler.removeCallbacksAndMessages(null);
         mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_START_STREAMING), 50);
+//            streaming = true;
+//        }
+    }
+
+    protected void stopStreaming() {
+//        if (streaming) {
+        mHandler.removeCallbacksAndMessages(null);
+        mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_STOP_STREAMING), 50);
+//            streaming = false;
+//        }
+
     }
 
     public static DnsManager getMyDnsManager() {
@@ -218,25 +234,21 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
     }
 
     @ReactProp(name = "stream")
-    public void setStream(AspectFrameLayout view, String stream) {  //FIXME 这里后续用json
-//        String streamJsonStrFromServer = "{\n" +
-//                "  \"id\":\"buhe\",\n" +
-//                "  \"title\":\"buhe\",\n" +
-//                "  \"hub\":\"pilitest\",\n" +
-//                "  \"publishKey\":\"6eeee8a82246636e\",\n" +
-//                "  \"publishSecurity\":\"static\",\n" +
-//                "  \"hosts\":{\"publish\":{\"rtmp\":\"pili-publish.pilitest.qiniucdn.com\"}}\n" +
-//                "}";
-
-        JSONObject mJSONObject = null;
-        try {
-            mJSONObject = new JSONObject(stream);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        mProfile.setStream(new StreamingProfile.Stream(mJSONObject));
+    public void setStream(AspectFrameLayout view, @Nullable ReadableMap stream) {  //FIXME 这里后续用json
+        mProfile.setStream(new StreamingProfile.Stream(Jsons.readableMapToJson(stream)));
         mCameraStreamingManager.setStreamingProfile(mProfile);
+    }
+
+    @ReactProp(name = "muted")
+    public void setMuted(AspectFrameLayout view, boolean muted) {
+        mCameraStreamingManager.mute(muted);
+    }
+
+    @ReactProp(name = "zoom")
+    //0 ~ 1
+    public void setZoom(AspectFrameLayout view, float factor) {
+        compute(factor);
+        mCameraStreamingManager.setZoomValue(mCurrentZoom);
     }
 
 
@@ -275,7 +287,7 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
             case CameraStreamingManager.STATE.CAMERA_SWITCHED:
 //                mShutterButtonPressed = false;
                 if (extra != null) {
-                    Log.i(TAG, "current camera id:" + (Integer)extra);
+                    Log.i(TAG, "current camera id:" + (Integer) extra);
                 }
                 Log.i(TAG, "camera switched");
                 break;
@@ -297,8 +309,6 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
                 break;
         }
     }
-
-
 
 
     @Override
@@ -340,54 +350,26 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
 
     @Override
     public boolean onZoomValueChanged(float factor) {
-//        if (mIsReady && mCameraStreamingManager.isZoomSupported()) {
-//            mCurrentZoom = (int) (mMaxZoom * factor);
-//            mCurrentZoom = Math.min(mCurrentZoom, mMaxZoom);
-//            mCurrentZoom = Math.max(0, mCurrentZoom);
-//
-//            Log.d(TAG, "zoom ongoing, scale: " + mCurrentZoom + ",factor:" + factor + ",maxZoom:" + mMaxZoom);
-//            if (!mHandler.hasMessages(MSG_SET_ZOOM)) {
-//                mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_SET_ZOOM), ZOOM_MINIMUM_WAIT_MILLIS);
-//                return true;
-//            }
-//        }
+        if (mIsReady && mCameraStreamingManager.isZoomSupported()) {
+            compute(factor);
+            Log.d(TAG, "zoom ongoing, scale: " + mCurrentZoom + ",factor:" + factor + ",maxZoom:" + mMaxZoom);
+            if (!mHandler.hasMessages(MSG_SET_ZOOM)) {
+                mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_SET_ZOOM), ZOOM_MINIMUM_WAIT_MILLIS);
+                return true;
+            }
+        }
         Log.d(TAG, "zoom ongoing, scale: " + mCurrentZoom + ",factor:" + factor + ",maxZoom:" + mMaxZoom);
         return false;
     }
 
-//    @Override
-//    public void onStateChanged(final int state, Object extra) {
-//        super.onStateChanged(state, extra);
-//        switch (state) {
-//            case CameraStreamingManager.STATE.CAMERA_SWITCHED:
-////                mShutterButtonPressed = false;
-//                if (extra != null) {
-//                    Log.i(TAG, "current camera id:" + (Integer)extra);
-//                }
-//                Log.i(TAG, "camera switched");
-//                break;
-//            case CameraStreamingManager.STATE.TORCH_INFO:
-//                if (extra != null) {
-//                    final boolean isSupportedTorch = (Boolean) extra;
-//                    Log.i(TAG, "isSupportedTorch=" + isSupportedTorch);
-//                    this.runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            if (isSupportedTorch) {
-//                                mTorchBtn.setVisibility(View.VISIBLE);
-//                            } else {
-//                                mTorchBtn.setVisibility(View.GONE);
-//                            }
-//                        }
-//                    });
-//                }
-//                break;
-//        }
-//    }
+    private void compute(float factor) {
+        mCurrentZoom = (int) (mMaxZoom * factor);
+        mCurrentZoom = Math.min(mCurrentZoom, mMaxZoom);
+        mCurrentZoom = Math.max(0, mCurrentZoom);
+    }
 
     @Override
     public boolean onStateHandled(final int state, Object extra) {
-//        super.onStateHandled(state, extra);
         switch (state) {
             case CameraStreamingManager.STATE.SENDING_BUFFER_HAS_FEW_ITEMS:
                 return false;
@@ -443,7 +425,7 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
 //        int newTexId = mFBO.drawFrame(texId, texWidth, texHeight);
         Log.i(TAG, "onDrawFrame texId:" + texId + ",texWidth:" + texWidth + ",texHeight:" + texHeight);
 //        return newTexId;
-        return  texId;
+        return texId;
     }
 
     @Override
@@ -456,7 +438,7 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
 //                        + "\nvideo:" + streamStatus.videoFps + " fps");
 //            }
 //        });
-        Log.i(TAG,"notifyStreamStatusChanged");
+        Log.i(TAG, "notifyStreamStatusChanged");
     }
 
     @Override
