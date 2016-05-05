@@ -60,7 +60,7 @@ var { requireNativeComponent, PropTypes, View } = require('react-native');
 var iface = {
         propTypes: {
             ...View.propTypes,
-        streamProfile: PropTypes.bool,
+        stream: PropTypes.string,
     },
     };
 

@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 23
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
     }
@@ -25,5 +25,5 @@ dependencies {
     compile 'com.qiniu:happy-dns:0.2.5'
     compile files('libs/pldroid-camera-streaming-1.5.3.jar')
     compile files('libs/pldroid-player-1.2.1.jar')
-    compile "com.facebook.react:react-native:+"
+    compile 'com.facebook.react:react-native:+'
 }
