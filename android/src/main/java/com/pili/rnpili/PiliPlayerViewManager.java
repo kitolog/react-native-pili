@@ -29,13 +29,6 @@ public class PiliPlayerViewManager extends SimpleViewManager<PLVideoView>{
     protected PLVideoView createViewInstance(ThemedReactContext reactContext) {
         this.reactContext = reactContext;
         PLVideoView mVideoView = new PLVideoView(reactContext);
-//        mVideoView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, Gravity.CENTER));
-//        mVideoView.setMinimumHeight(300);
-//        mVideoView.setMinimumWidth(300);
-//        System.out.println(mVideoView.getHeight());
-//        System.out.println(mVideoView.getWidth());
-//        mVideoView.setBottom(2000);
-//        mVideoView.setRight(2000);
         return mVideoView;
     }
 
@@ -133,12 +126,6 @@ public class PiliPlayerViewManager extends SimpleViewManager<PLVideoView>{
 //                    showToastTips("unknown error !");
                     break;
             }
-            // Todo pls handle the error status here, retry or call finish()
-//            finish();
-            // If you want to retry, do like this:
-            // mVideoView.setVideoPath(mVideoPath);
-            // Return true means the error has been handled
-            // If return false, then `onCompletion` will be called
             return true;
         }
     };
@@ -147,8 +134,6 @@ public class PiliPlayerViewManager extends SimpleViewManager<PLVideoView>{
         @Override
         public void onCompletion(PLMediaPlayer plMediaPlayer) {
             Log.d(TAG, "Play Completed !");
-//            showToastTips("Play Completed !");
-//            finish();
         }
     };
 
@@ -172,18 +157,5 @@ public class PiliPlayerViewManager extends SimpleViewManager<PLVideoView>{
             Log.d(TAG, "onVideoSizeChanged: " + width + "," + height);
         }
     };
-
-//    private void showToastTips(final String tips) {
-//        runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                if (mToast != null) {
-//                    mToast.cancel();
-//                }
-//                mToast = Toast.makeText(PLVideoViewActivity.this, tips, Toast.LENGTH_SHORT);
-//                mToast.show();
-//            }
-//        });
-//    }
 
 }
