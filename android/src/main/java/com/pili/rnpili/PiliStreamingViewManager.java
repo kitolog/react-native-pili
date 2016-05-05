@@ -11,19 +11,14 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.facebook.react.bridge.LifecycleEventListener;
-import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReadableMap;
-import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
+import com.facebook.react.uimanager.annotations.ReactProp;
 import com.pili.pldroid.streaming.CameraStreamingManager;
 import com.pili.pldroid.streaming.CameraStreamingSetting;
 import com.pili.pldroid.streaming.MicrophoneStreamingSetting;
-import com.pili.pldroid.streaming.StreamStatusCallback;
-
-import com.pili.pldroid.streaming.StreamingPreviewCallback;
 import com.pili.pldroid.streaming.StreamingProfile;
-import com.pili.pldroid.streaming.SurfaceTextureCallback;
 import com.pili.pldroid.streaming.widget.AspectFrameLayout;
 import com.qiniu.android.dns.DnsManager;
 import com.qiniu.android.dns.IResolver;
@@ -31,9 +26,6 @@ import com.qiniu.android.dns.NetworkInfo;
 import com.qiniu.android.dns.http.DnspodFree;
 import com.qiniu.android.dns.local.AndroidDnsServer;
 import com.qiniu.android.dns.local.Resolver;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -49,10 +41,6 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
         CameraPreviewFrameView.Listener,
         CameraStreamingManager.StreamingSessionListener,
         CameraStreamingManager.StreamingStateListener,
-        View.OnLayoutChangeListener,
-        StreamStatusCallback,
-        StreamingPreviewCallback,
-        SurfaceTextureCallback,
         LifecycleEventListener
 
 
@@ -113,10 +101,7 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
             boolean result = mCameraStreamingManager.prepare(setting, microphoneSetting, mProfile);
 
             mCameraStreamingManager.setStreamingStateListener(this);
-            mCameraStreamingManager.setStreamingPreviewCallback(this);
-            mCameraStreamingManager.setSurfaceTextureCallback(this);
             mCameraStreamingManager.setStreamingSessionListener(this);
-            mCameraStreamingManager.setStreamStatusCallback(this);
             context.addLifecycleEventListener(this);
 
         }
@@ -126,17 +111,17 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
     public AspectFrameLayout createViewInstance(ThemedReactContext context) {
         this.context = context;
 
-        AspectFrameLayout afl = new AspectFrameLayout(context);
+        AspectFrameLayout piliStreamPreview = new AspectFrameLayout(context);
 
-        afl.setShowMode(AspectFrameLayout.SHOW_MODE.REAL);
+        piliStreamPreview.setShowMode(AspectFrameLayout.SHOW_MODE.REAL);
 
         CameraPreviewFrameView previewFrameView = new CameraPreviewFrameView(context);
         previewFrameView.setListener(this);
         previewFrameView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        afl.addView(previewFrameView);
-        initializeStreamingSessionIfNeeded(afl, previewFrameView);
+        piliStreamPreview.addView(previewFrameView);
+        initializeStreamingSessionIfNeeded(piliStreamPreview, previewFrameView);
 
-        afl.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+        piliStreamPreview.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
             @Override
             public void onViewAttachedToWindow(View v) {
                 mCameraStreamingManager.resume();
@@ -148,7 +133,7 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
             }
         });
 
-        return afl;
+        return piliStreamPreview;
     }
 
     @Override
@@ -157,80 +142,6 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
      */
     public String getName() {
         return "RCTStreaming";
-    }
-
-    protected Handler mHandler = new Handler(Looper.getMainLooper()) {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case MSG_START_STREAMING:
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            // disable the shutter button before startStreaming
-//                            setShutterButtonEnabled(false);
-                            boolean res = mCameraStreamingManager.startStreaming();
-//                            mShutterButtonPressed = true;
-                            Log.i(TAG, "res:" + res);
-//                            if (!res) {
-//                                mShutterButtonPressed = false;
-//                                setShutterButtonEnabled(true);
-//                            }
-//                            setShutterButtonPressed(mShutterButtonPressed);
-                        }
-                    }).start();
-                    break;
-                case MSG_STOP_STREAMING:
-                    // disable the shutter button before stopStreaming
-//                    setShutterButtonEnabled(false);
-                    boolean res = mCameraStreamingManager.stopStreaming();
-//                    if (!res) {
-//                        mShutterButtonPressed = true;
-//                        setShutterButtonEnabled(true);
-//                    }
-//                    setShutterButtonPressed(mShutterButtonPressed);
-                    break;
-                case MSG_SET_ZOOM:
-                    mCameraStreamingManager.setZoomValue(mCurrentZoom);
-                    break;
-                case MSG_MUTE:  //外部设置,不需要提供了
-//                    mIsNeedMute = !mIsNeedMute;
-//                    mCameraStreamingManager.mute(mIsNeedMute);
-//                    updateMuteButtonText();
-                    break;
-                default:
-                    Log.e(TAG, "Invalid message");
-            }
-        }
-    };
-
-    protected void startStreaming() {
-//        if (!streaming) {
-        mHandler.removeCallbacksAndMessages(null);
-        mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_START_STREAMING), 50);
-//            streaming = true;
-//        }
-    }
-
-    protected void stopStreaming() {
-//        if (streaming) {
-        mHandler.removeCallbacksAndMessages(null);
-        mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_STOP_STREAMING), 50);
-//            streaming = false;
-//        }
-
-    }
-
-    public static DnsManager getMyDnsManager() {
-        IResolver r0 = new DnspodFree();
-        IResolver r1 = AndroidDnsServer.defaultResolver();
-        IResolver r2 = null;
-        try {
-            r2 = new Resolver(InetAddress.getByName("119.29.29.29"));
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        return new DnsManager(NetworkInfo.normal, new IResolver[]{r0, r1, r2});
     }
 
     @ReactProp(name = "stream")
@@ -279,13 +190,10 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
             case CameraStreamingManager.STATE.AUDIO_RECORDING_FAIL:
                 break;
             case CameraStreamingManager.STATE.OPEN_CAMERA_FAIL:
-//                Log.e(TAG, "Open Camera Fail. id:" + extra);
                 break;
             case CameraStreamingManager.STATE.DISCONNECTED:
-//                mLogContent += "DISCONNECTED\n";
                 break;
             case CameraStreamingManager.STATE.CAMERA_SWITCHED:
-//                mShutterButtonPressed = false;
                 if (extra != null) {
                     Log.i(TAG, "current camera id:" + (Integer) extra);
                 }
@@ -379,67 +287,7 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
         return false;
     }
 
-    @Override
-    public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-        Log.i(TAG, "view!!!!:" + v);
-    }
 
-    @Override
-    public void onPreviewFrame(byte[] bytes, Camera camera) {
-        System.out.println();
-    }
-
-    @Override
-    public boolean onPreviewFrame(byte[] bytes, int width, int height) {
-//        deal with the yuv data.
-//        long start = System.currentTimeMillis();
-//        for (int i = 0; i < bytes.length; i++) {
-//            bytes[i] = 0x00;
-//        }
-//        Log.i(TAG, "old onPreviewFrame cost :" + (System.currentTimeMillis() - start));
-        return true;
-    }
-
-    @Override
-    public void onSurfaceCreated() {
-        Log.i(TAG, "onSurfaceCreated");
-//        mFBO.initialize(this);
-    }
-
-    @Override
-    public void onSurfaceChanged(int width, int height) {
-        Log.i(TAG, "onSurfaceChanged width:" + width + ",height:" + height);
-//        mFBO.updateSurfaceSize(width, height);
-    }
-
-    @Override
-    public void onSurfaceDestroyed() {
-        Log.i(TAG, "onSurfaceDestroyed");
-//        mFBO.release();
-    }
-
-    @Override
-    public int onDrawFrame(int texId, int texWidth, int texHeight) {
-        // newTexId should not equal with texId. texId is from the SurfaceTexture.
-        // Otherwise, there is no filter effect.
-//        int newTexId = mFBO.drawFrame(texId, texWidth, texHeight);
-        Log.i(TAG, "onDrawFrame texId:" + texId + ",texWidth:" + texWidth + ",texHeight:" + texHeight);
-//        return newTexId;
-        return texId;
-    }
-
-    @Override
-    public void notifyStreamStatusChanged(final StreamingProfile.StreamStatus streamStatus) {
-//        runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                mStreamStatus.setText("bitrate:" + streamStatus.totalAVBitrate / 1024 + " kbps"
-//                        + "\naudio:" + streamStatus.audioFps + " fps"
-//                        + "\nvideo:" + streamStatus.videoFps + " fps");
-//            }
-//        });
-        Log.i(TAG, "notifyStreamStatusChanged");
-    }
 
     @Override
     public void onHostResume() {
@@ -454,5 +302,53 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
     @Override
     public void onHostDestroy() {
         mCameraStreamingManager.destroy();
+    }
+
+
+    protected Handler mHandler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case MSG_START_STREAMING:
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            boolean res = mCameraStreamingManager.startStreaming();
+                            Log.i(TAG, "res:" + res);
+                        }
+                    }).start();
+                    break;
+                case MSG_STOP_STREAMING:
+                    boolean res = mCameraStreamingManager.stopStreaming();
+                    break;
+                case MSG_SET_ZOOM:
+                    mCameraStreamingManager.setZoomValue(mCurrentZoom);
+                    break;
+                default:
+                    Log.e(TAG, "Invalid message");
+            }
+        }
+    };
+
+    private void startStreaming() {
+        mHandler.removeCallbacksAndMessages(null);
+        mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_START_STREAMING), 50);
+    }
+
+    private void stopStreaming() {
+        mHandler.removeCallbacksAndMessages(null);
+        mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_STOP_STREAMING), 50);
+    }
+
+    private DnsManager getMyDnsManager() {
+        IResolver r0 = new DnspodFree();
+        IResolver r1 = AndroidDnsServer.defaultResolver();
+        IResolver r2 = null;
+        try {
+            r2 = new Resolver(InetAddress.getByName("119.29.29.29"));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return new DnsManager(NetworkInfo.normal, new IResolver[]{r0, r1, r2});
     }
 }
