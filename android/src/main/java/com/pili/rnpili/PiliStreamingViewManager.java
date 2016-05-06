@@ -1,10 +1,12 @@
 package com.pili.rnpili;
 
+import android.app.Activity;
 import android.hardware.Camera;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,8 @@ import com.pili.pldroid.streaming.CameraStreamingSetting;
 import com.pili.pldroid.streaming.MicrophoneStreamingSetting;
 import com.pili.pldroid.streaming.StreamingProfile;
 import com.pili.pldroid.streaming.widget.AspectFrameLayout;
+import com.pili.rnpili.support.FocusIndicatorRotateLayout;
+import com.pili.rnpili.support.RotateLayout;
 import com.qiniu.android.dns.DnsManager;
 import com.qiniu.android.dns.IResolver;
 import com.qiniu.android.dns.NetworkInfo;
@@ -61,7 +65,15 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
     private CameraStreamingSetting setting;
     private MicrophoneStreamingSetting microphoneSetting;
     private ThemedReactContext context;
+    private Activity activity;
+    private RotateLayout mRotateLayout;
+    private CameraPreviewFrameView previewFrameView;
+    private AspectFrameLayout piliStreamPreview;
 
+
+    public PiliStreamingViewManager(Activity activity) {
+        this.activity = activity;
+    }
 
     private void initializeStreamingSessionIfNeeded(AspectFrameLayout afl, CameraPreviewFrameView previewFrameView) {
         if (mCameraStreamingManager == null) {
@@ -99,7 +111,7 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
             microphoneSetting.setBluetoothSCOEnabled(false);
 
             boolean result = mCameraStreamingManager.prepare(setting, microphoneSetting, mProfile);
-
+            setFocusAreaIndicator();
             mCameraStreamingManager.setStreamingStateListener(this);
             mCameraStreamingManager.setStreamingSessionListener(this);
             context.addLifecycleEventListener(this);
@@ -111,11 +123,11 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
     public AspectFrameLayout createViewInstance(ThemedReactContext context) {
         this.context = context;
 
-        AspectFrameLayout piliStreamPreview = new AspectFrameLayout(context);
+        piliStreamPreview = new AspectFrameLayout(context);
 
         piliStreamPreview.setShowMode(AspectFrameLayout.SHOW_MODE.REAL);
 
-        CameraPreviewFrameView previewFrameView = new CameraPreviewFrameView(context);
+        previewFrameView = new CameraPreviewFrameView(context);
         previewFrameView.setListener(this);
         previewFrameView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         piliStreamPreview.addView(previewFrameView);
@@ -162,6 +174,25 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
         mCameraStreamingManager.setZoomValue(mCurrentZoom);
     }
 
+
+    protected void setFocusAreaIndicator() {
+        if (mRotateLayout == null) {
+            mRotateLayout = new FocusIndicatorRotateLayout(context,null);
+            mRotateLayout
+                    .setLayoutParams(new FrameLayout.LayoutParams(
+                            FrameLayout.LayoutParams.WRAP_CONTENT,
+                            FrameLayout.LayoutParams.WRAP_CONTENT,
+                            Gravity.CENTER
+                            ));
+            View indicator = new View(context);
+            indicator.setLayoutParams(new ViewGroup.LayoutParams(120,120));
+            mRotateLayout.addView(indicator);
+            mRotateLayout.setChild(indicator);
+            piliStreamPreview.addView(mRotateLayout);
+            mCameraStreamingManager.setFocusAreaIndicator(mRotateLayout,
+                    indicator);
+        }
+    }
 
     @Override
     public void onStateChanged(int state, Object extra) {
@@ -249,8 +280,13 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
         Log.i(TAG, "onSingleTapUp X:" + e.getX() + ",Y:" + e.getY());
 
         if (mIsReady) {
-//            setFocusAreaIndicator();
-            mCameraStreamingManager.doSingleTapUp((int) e.getX(), (int) e.getY());
+            setFocusAreaIndicator();
+            try{
+                mCameraStreamingManager.doSingleTapUp((int) e.getX(), (int) e.getY());
+            }catch (Exception ex){
+                Log.e(TAG,ex.getMessage());
+            }
+
             return true;
         }
         return false;
