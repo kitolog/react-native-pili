@@ -1,4 +1,4 @@
-package com.pili.rnpili;
+package com.pili.rnpili.support;
 
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableMapKeySetIterator;

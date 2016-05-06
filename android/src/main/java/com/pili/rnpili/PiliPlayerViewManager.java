@@ -1,22 +1,20 @@
 package com.pili.rnpili;
 
 import android.util.Log;
-import android.view.Gravity;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.Toast;
 
+import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import com.pili.pldroid.player.AVOptions;
 import com.pili.pldroid.player.PLMediaPlayer;
 import com.pili.pldroid.player.widget.PLVideoView;
+import com.pili.rnpili.support.MediaController;
 
 /**
  * Created by buhe on 16/4/29.
  */
-public class PiliPlayerViewManager extends SimpleViewManager<PLVideoView>{
+public class PiliPlayerViewManager extends SimpleViewManager<PLVideoView> {
     private ThemedReactContext reactContext;
     private static final String TAG = PiliPlayerViewManager.class.getSimpleName();
 
@@ -29,6 +27,15 @@ public class PiliPlayerViewManager extends SimpleViewManager<PLVideoView>{
     protected PLVideoView createViewInstance(ThemedReactContext reactContext) {
         this.reactContext = reactContext;
         PLVideoView mVideoView = new PLVideoView(reactContext);
+        // Set some listeners
+        // Set some listeners
+        mVideoView.setOnPreparedListener(mOnPreparedListener);
+        mVideoView.setOnInfoListener(mOnInfoListener);
+        mVideoView.setOnVideoSizeChangedListener(mOnVideoSizeChangedListener);
+        mVideoView.setOnBufferingUpdateListener(mOnBufferingUpdateListener);
+        mVideoView.setOnCompletionListener(mOnCompletionListener);
+        mVideoView.setOnSeekCompleteListener(mOnSeekCompleteListener);
+        mVideoView.setOnErrorListener(mOnErrorListener);
         return mVideoView;
     }
 
@@ -41,44 +48,48 @@ public class PiliPlayerViewManager extends SimpleViewManager<PLVideoView>{
         return false;
     }
 
-    @ReactProp(name = "src")
-    public void setSource(PLVideoView mVideoView,String src){
+    @ReactProp(name = "source")
+    public void setSource(PLVideoView mVideoView, ReadableMap source) {
         AVOptions options = new AVOptions();
-
-        if (isLiveStreaming(src)) {
-            // the unit of timeout is ms
-            options.setInteger(AVOptions.KEY_GET_AV_FRAME_TIMEOUT, 10 * 1000);
-            // Some optimization with buffering mechanism when be set to 1
-            options.setInteger(AVOptions.KEY_LIVE_STREAMING, 1);
+        String uri = source.getString("uri");
+        boolean mediaController = source.hasKey("controller") && source.getBoolean("controller");
+        int avFrameTimeout = source.hasKey("timeout") ? source.getInt("timeout") : -1;        //10 * 1000 ms
+        boolean liveStreaming = source.hasKey("live") && source.getBoolean("live");  //1 or 0 // 1 -> live
+        boolean codec = source.hasKey("hardCodec") && source.getBoolean("hardCodec");  //1 or 0  // 1 -> hw codec enable, 0 -> disable [recommended]
+        // the unit of timeout is ms
+        if (avFrameTimeout >= 0) {
+            options.setInteger(AVOptions.KEY_GET_AV_FRAME_TIMEOUT, avFrameTimeout);
         }
+        // Some optimization with buffering mechanism when be set to 1
+        if (liveStreaming) {
+            options.setInteger(AVOptions.KEY_LIVE_STREAMING, 1);
+        } else {
+            options.setInteger(AVOptions.KEY_LIVE_STREAMING, 0);
+        }
+//        }
 
         // 1 -> hw codec enable, 0 -> disable [recommended]
-//        int codec = getIntent().getIntExtra("mediaCodec", 0);
-        int codec = 0;
-        options.setInteger(AVOptions.KEY_MEDIACODEC, codec);
+        if (codec) {
+            options.setInteger(AVOptions.KEY_MEDIACODEC, 1);
+        } else {
+            options.setInteger(AVOptions.KEY_MEDIACODEC, 0);
+        }
 
         mVideoView.setAVOptions(options);
-
-        // Set some listeners
-        // Set some listeners
-        mVideoView.setOnPreparedListener(mOnPreparedListener);
-        mVideoView.setOnInfoListener(mOnInfoListener);
-        mVideoView.setOnVideoSizeChangedListener(mOnVideoSizeChangedListener);
-        mVideoView.setOnBufferingUpdateListener(mOnBufferingUpdateListener);
-        mVideoView.setOnCompletionListener(mOnCompletionListener);
-        mVideoView.setOnSeekCompleteListener(mOnSeekCompleteListener);
-        mVideoView.setOnErrorListener(mOnErrorListener);
 
         // After setVideoPath, the play will start automatically
         // mVideoView.start() is not required
 
-        mVideoView.setVideoPath(src);
+        mVideoView.setVideoPath(uri);
 
-        // You can also use a custom `MediaController` widget
-        MediaController mMediaController = new MediaController(reactContext, false, isLiveStreaming(src));
-        mVideoView.setMediaController(mMediaController);
+        if (mediaController) {
+            // You can also use a custom `MediaController` widget
+            MediaController mMediaController = new MediaController(reactContext, false, isLiveStreaming(uri));
+            mVideoView.setMediaController(mMediaController);
+        }
 
     }
+
 
     private PLMediaPlayer.OnPreparedListener mOnPreparedListener = new PLMediaPlayer.OnPreparedListener() {
         @Override
@@ -148,7 +159,9 @@ public class PiliPlayerViewManager extends SimpleViewManager<PLVideoView>{
         @Override
         public void onSeekComplete(PLMediaPlayer plMediaPlayer) {
             Log.d(TAG, "onSeekComplete !");
-        };
+        }
+
+        ;
     };
 
     private PLMediaPlayer.OnVideoSizeChangedListener mOnVideoSizeChangedListener = new PLMediaPlayer.OnVideoSizeChangedListener() {

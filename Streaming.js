@@ -62,7 +62,8 @@ var iface = {
         ...View.propTypes,
       stream: PropTypes.object,
       muted: PropTypes.bool,
-      zoom: PropTypes.number
+      zoom: PropTypes.number,
+      focus: PropTypes.bool
     },
     };
 

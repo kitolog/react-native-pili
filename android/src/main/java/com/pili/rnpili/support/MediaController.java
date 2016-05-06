@@ -1,4 +1,4 @@
-package com.pili.rnpili;
+package com.pili.rnpili.support;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

@@ -7,7 +7,7 @@ var { requireNativeComponent, PropTypes, View } = require('react-native');
 var iface = {
       propTypes: {
         ...View.propTypes,
-      src: PropTypes.string,
+      source: PropTypes.object,
     },
     };
 

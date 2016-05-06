@@ -22,7 +22,9 @@ import com.pili.pldroid.streaming.CameraStreamingSetting;
 import com.pili.pldroid.streaming.MicrophoneStreamingSetting;
 import com.pili.pldroid.streaming.StreamingProfile;
 import com.pili.pldroid.streaming.widget.AspectFrameLayout;
+import com.pili.rnpili.support.Config;
 import com.pili.rnpili.support.FocusIndicatorRotateLayout;
+import com.pili.rnpili.support.Jsons;
 import com.pili.rnpili.support.RotateLayout;
 import com.qiniu.android.dns.DnsManager;
 import com.qiniu.android.dns.IResolver;
@@ -69,6 +71,7 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
     private RotateLayout mRotateLayout;
     private CameraPreviewFrameView previewFrameView;
     private AspectFrameLayout piliStreamPreview;
+    private boolean focus = false;
 
 
     public PiliStreamingViewManager(Activity activity) {
@@ -111,7 +114,7 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
             microphoneSetting.setBluetoothSCOEnabled(false);
 
             boolean result = mCameraStreamingManager.prepare(setting, microphoneSetting, mProfile);
-            setFocusAreaIndicator();
+//            setFocusAreaIndicator();
             mCameraStreamingManager.setStreamingStateListener(this);
             mCameraStreamingManager.setStreamingSessionListener(this);
             context.addLifecycleEventListener(this);
@@ -174,6 +177,10 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
         mCameraStreamingManager.setZoomValue(mCurrentZoom);
     }
 
+    @ReactProp(name = "focus")
+    public void setFocus(AspectFrameLayout view,boolean focus){
+        this.focus = focus;
+    }
 
     protected void setFocusAreaIndicator() {
         if (mRotateLayout == null) {
@@ -279,7 +286,7 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
     public boolean onSingleTapUp(MotionEvent e) {
         Log.i(TAG, "onSingleTapUp X:" + e.getX() + ",Y:" + e.getY());
 
-        if (mIsReady) {
+        if (mIsReady && focus) {
             setFocusAreaIndicator();
             try{
                 mCameraStreamingManager.doSingleTapUp((int) e.getX(), (int) e.getY());
