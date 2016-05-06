@@ -19,20 +19,27 @@ Development
         }
         }}
     style={{
-              height:400,
-              width:400,
-            }}
-    zoom={1}
-    muted={true}
+        height:400,
+        width:400,
+    }}
+    zoom={1} //zoom 
+    muted={true} //muted
+    focus={false} //focus
     />
 ```
 ###2. 直播播放
 ```javascript
 <Player
-    src={"rtmp://pili-live-rtmp.pilitest.qiniucdn.com/hubname/title"} //pili online url
+  source={{
+    uri:"rtmp://live.hkstv.hk.lxdns.com/live/hks",
+    controller: true, //Controller ui
+    timeout: 10 * 1000, //live streaming timeout (ms)
+    live:true, //live streaming ?
+    hardCodec:false, //hard codec [recommended false]
+    }}
     style={{
-              height:400,
-              width:400
-            }}
+      height:200,
+      width:200,
+    }}
     />
 ```
