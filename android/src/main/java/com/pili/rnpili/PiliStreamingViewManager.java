@@ -210,9 +210,9 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
         this.started = started;
         if(mIsReady){  //没有准备好则只赋值,等待onStateChanged 唤起
             if(started){
-                stopStreaming();
-            }else{
                 startStreaming();
+            }else{
+                stopStreaming();
             }
         }
     }
