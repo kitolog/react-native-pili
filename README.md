@@ -1,6 +1,7 @@
 #Pili Streaming Cloud React Native SDK
 ##Installation
-Development
+Android Preview Version
+iOS TODO
 
 ##Usage
 ###1. 推流
