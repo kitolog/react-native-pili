@@ -25,6 +25,17 @@ Development
     zoom={1} //zoom 
     muted={true} //muted
     focus={false} //focus
+    profile={{  //video and audio profile
+       video:{
+         fps:30,
+         bps:1000 * 1024,
+         maxFrameInterval:48
+       },
+       audio:{
+         rate:44100,
+         bitrate:96 * 1024
+       },
+    started={false} //streaming status
     />
 ```
 ###2. 直播播放
