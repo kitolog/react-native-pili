@@ -33,6 +33,8 @@ import com.qiniu.android.dns.http.DnspodFree;
 import com.qiniu.android.dns.local.AndroidDnsServer;
 import com.qiniu.android.dns.local.Resolver;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.List;
@@ -72,6 +74,7 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
     private CameraPreviewFrameView previewFrameView;
     private AspectFrameLayout piliStreamPreview;
     private boolean focus = false;
+    private boolean started = true;//default start attach on parent view
 
 
     public PiliStreamingViewManager(Activity activity) {
@@ -86,8 +89,8 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
                     previewFrameView,
                     CameraStreamingManager.EncodingType.SW_VIDEO_WITH_SW_AUDIO_CODEC);  // soft codec
             mProfile = new StreamingProfile();
-            StreamingProfile.AudioProfile aProfile = new StreamingProfile.AudioProfile(44100, 96 * 1024);
-            StreamingProfile.VideoProfile vProfile = new StreamingProfile.VideoProfile(30, 1000 * 1024, 48);
+            StreamingProfile.AudioProfile aProfile = new StreamingProfile.AudioProfile(44100, 96 * 1024); //audio sample rate, audio bitrate
+            StreamingProfile.VideoProfile vProfile = new StreamingProfile.VideoProfile(30, 1000 * 1024, 48);//fps bps maxFrameInterval
             StreamingProfile.AVProfile avProfile = new StreamingProfile.AVProfile(vProfile, aProfile);
             mProfile.setVideoQuality(StreamingProfile.VIDEO_QUALITY_HIGH3)
                     .setAudioQuality(StreamingProfile.AUDIO_QUALITY_MEDIUM2)
@@ -160,9 +163,29 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
     }
 
     @ReactProp(name = "stream")
-    public void setStream(AspectFrameLayout view, @Nullable ReadableMap stream) {  //FIXME 这里后续用json
+    public void setStream(AspectFrameLayout view, @Nullable ReadableMap stream) {
         mProfile.setStream(new StreamingProfile.Stream(Jsons.readableMapToJson(stream)));
         mCameraStreamingManager.setStreamingProfile(mProfile);
+    }
+
+    @ReactProp(name = "profile")
+    public void setProfile(AspectFrameLayout view, @Nullable ReadableMap profile){
+        ReadableMap video = profile.getMap("video");
+        ReadableMap audio = profile.getMap("audio");
+
+        StreamingProfile.AudioProfile aProfile =
+                new StreamingProfile.AudioProfile(audio.getInt("rate"), audio.getInt("bitrate")); //audio sample rate, audio bitrate
+        StreamingProfile.VideoProfile vProfile =
+                new StreamingProfile.VideoProfile(video.getInt("fps"), video.getInt("bps"), video.getInt("maxFrameInterval"));//fps bps maxFrameInterval
+        StreamingProfile.AVProfile avProfile = new StreamingProfile.AVProfile(vProfile, aProfile);
+        mProfile.setAVProfile(avProfile);
+        mCameraStreamingManager.setStreamingProfile(mProfile);
+
+    }
+
+    @ReactProp(name = "settings")
+    public void setSettings(AspectFrameLayout view, @Nullable ReadableMap settings){
+
     }
 
     @ReactProp(name = "muted")
@@ -180,6 +203,18 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
     @ReactProp(name = "focus")
     public void setFocus(AspectFrameLayout view,boolean focus){
         this.focus = focus;
+    }
+
+    @ReactProp(name = "started")
+    public void setStarted(AspectFrameLayout view,boolean started){
+        this.started = started;
+        if(mIsReady){  //没有准备好则只赋值,等待onStateChanged 唤起
+            if(started){
+                stopStreaming();
+            }else{
+                startStreaming();
+            }
+        }
     }
 
     protected void setFocusAreaIndicator() {
@@ -209,7 +244,9 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
             case CameraStreamingManager.STATE.READY:
                 mIsReady = true;
                 mMaxZoom = mCameraStreamingManager.getMaxZoom();
-                startStreaming();
+                if(started) {
+                    startStreaming();
+                }
                 break;
             case CameraStreamingManager.STATE.CONNECTING:
                 break;

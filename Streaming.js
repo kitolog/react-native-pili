@@ -63,7 +63,19 @@ var iface = {
       stream: PropTypes.object,
       muted: PropTypes.bool,
       zoom: PropTypes.number,
-      focus: PropTypes.bool
+      focus: PropTypes.bool,
+      profile: PropTypes.shape({                          // 是否符合指定格式的物件
+        video: PropTypes.shape({
+          fps:PropTypes.number.isRequired,
+          bps:PropTypes.number.isRequired,
+          maxFrameInterval:PropTypes.number.isRequired
+        }).isRequired,
+        audio:  PropTypes.shape({
+          rate:PropTypes.number.isRequired,
+          bitrate:PropTypes.number.isRequired,
+        }).isRequired
+      }).isRequired,
+      settings: PropTypes.object
     },
     };
 
