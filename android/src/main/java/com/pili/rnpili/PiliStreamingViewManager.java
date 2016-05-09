@@ -12,11 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.LifecycleEventListener;
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
+import com.facebook.react.uimanager.events.RCTEventEmitter;
 import com.pili.pldroid.streaming.CameraStreamingManager;
 import com.pili.pldroid.streaming.CameraStreamingSetting;
 import com.pili.pldroid.streaming.MicrophoneStreamingSetting;
@@ -38,6 +41,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Nullable;
 
@@ -53,7 +57,27 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
 
 
 {
-    private static final String TAG = "StreamingBaseActivity";
+    public enum Events {
+        READY("onReady"),
+        CONNECTING("onConnecting"),
+        STREAMING("onStreaming"),
+        SHUTDOWN("onShutdown"),
+        IOERROR("onIOError"),
+        DISCONNECTED("onDisconnected");
+
+        private final String mName;
+
+        Events(final String name) {
+            mName = name;
+        }
+
+        @Override
+        public String toString() {
+            return mName;
+        }
+    }
+
+    private static final String TAG = "PiliStreamingView";
     protected static final int MSG_START_STREAMING = 0;
     protected static final int MSG_STOP_STREAMING = 1;
     private static final int MSG_SET_ZOOM = 2;
@@ -69,17 +93,13 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
     private CameraStreamingSetting setting;
     private MicrophoneStreamingSetting microphoneSetting;
     private ThemedReactContext context;
-    private Activity activity;
     private RotateLayout mRotateLayout;
     private CameraPreviewFrameView previewFrameView;
     private AspectFrameLayout piliStreamPreview;
     private boolean focus = false;
     private boolean started = true;//default start attach on parent view
+    private RCTEventEmitter mEventEmitter;
 
-
-    public PiliStreamingViewManager(Activity activity) {
-        this.activity = activity;
-    }
 
     private void initializeStreamingSessionIfNeeded(AspectFrameLayout afl, CameraPreviewFrameView previewFrameView) {
         if (mCameraStreamingManager == null) {
@@ -126,8 +146,19 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
     }
 
     @Override
+    @Nullable
+    public Map getExportedCustomDirectEventTypeConstants() {
+        MapBuilder.Builder builder = MapBuilder.builder();
+        for (Events event : Events.values()) {
+            builder.put(event.toString(), MapBuilder.of("registrationName", event.toString()));
+        }
+        return builder.build();
+    }
+
+    @Override
     public AspectFrameLayout createViewInstance(ThemedReactContext context) {
         this.context = context;
+        mEventEmitter = context.getJSModule(RCTEventEmitter.class);
 
         piliStreamPreview = new AspectFrameLayout(context);
 
@@ -169,7 +200,7 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
     }
 
     @ReactProp(name = "profile")
-    public void setProfile(AspectFrameLayout view, @Nullable ReadableMap profile){
+    public void setProfile(AspectFrameLayout view, @Nullable ReadableMap profile) {
         ReadableMap video = profile.getMap("video");
         ReadableMap audio = profile.getMap("audio");
 
@@ -184,7 +215,7 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
     }
 
     @ReactProp(name = "settings")
-    public void setSettings(AspectFrameLayout view, @Nullable ReadableMap settings){
+    public void setSettings(AspectFrameLayout view, @Nullable ReadableMap settings) {
 
     }
 
@@ -201,17 +232,17 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
     }
 
     @ReactProp(name = "focus")
-    public void setFocus(AspectFrameLayout view,boolean focus){
+    public void setFocus(AspectFrameLayout view, boolean focus) {
         this.focus = focus;
     }
 
     @ReactProp(name = "started")
-    public void setStarted(AspectFrameLayout view,boolean started){
+    public void setStarted(AspectFrameLayout view, boolean started) {
         this.started = started;
-        if(mIsReady){  //没有准备好则只赋值,等待onStateChanged 唤起
-            if(started){
+        if (mIsReady) {  //没有准备好则只赋值,等待onStateChanged 唤起
+            if (started) {
                 startStreaming();
-            }else{
+            } else {
                 stopStreaming();
             }
         }
@@ -219,21 +250,25 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
 
     protected void setFocusAreaIndicator() {
         if (mRotateLayout == null) {
-            mRotateLayout = new FocusIndicatorRotateLayout(context,null);
+            mRotateLayout = new FocusIndicatorRotateLayout(context, null);
             mRotateLayout
                     .setLayoutParams(new FrameLayout.LayoutParams(
                             FrameLayout.LayoutParams.WRAP_CONTENT,
                             FrameLayout.LayoutParams.WRAP_CONTENT,
                             Gravity.CENTER
-                            ));
+                    ));
             View indicator = new View(context);
-            indicator.setLayoutParams(new ViewGroup.LayoutParams(120,120));
+            indicator.setLayoutParams(new ViewGroup.LayoutParams(120, 120));
             mRotateLayout.addView(indicator);
             mRotateLayout.setChild(indicator);
             piliStreamPreview.addView(mRotateLayout);
             mCameraStreamingManager.setFocusAreaIndicator(mRotateLayout,
                     indicator);
         }
+    }
+
+    public int getTargetId() {
+        return piliStreamPreview.getId();
     }
 
     @Override
@@ -244,17 +279,22 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
             case CameraStreamingManager.STATE.READY:
                 mIsReady = true;
                 mMaxZoom = mCameraStreamingManager.getMaxZoom();
-                if(started) {
+                if (started) {
                     startStreaming();
                 }
+                mEventEmitter.receiveEvent(getTargetId(), Events.READY.toString(), Arguments.createMap());
                 break;
             case CameraStreamingManager.STATE.CONNECTING:
+                mEventEmitter.receiveEvent(getTargetId(), Events.CONNECTING.toString(), Arguments.createMap());
                 break;
             case CameraStreamingManager.STATE.STREAMING:
+                mEventEmitter.receiveEvent(getTargetId(), Events.STREAMING.toString(), Arguments.createMap());
                 break;
             case CameraStreamingManager.STATE.SHUTDOWN:
+                mEventEmitter.receiveEvent(getTargetId(), Events.SHUTDOWN.toString(), Arguments.createMap());
                 break;
             case CameraStreamingManager.STATE.IOERROR:
+                mEventEmitter.receiveEvent(getTargetId(), Events.IOERROR.toString(), Arguments.createMap());
                 break;
             case CameraStreamingManager.STATE.UNKNOWN:
                 break;
@@ -267,6 +307,7 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
             case CameraStreamingManager.STATE.OPEN_CAMERA_FAIL:
                 break;
             case CameraStreamingManager.STATE.DISCONNECTED:
+                mEventEmitter.receiveEvent(getTargetId(), Events.DISCONNECTED.toString(), Arguments.createMap());
                 break;
             case CameraStreamingManager.STATE.CAMERA_SWITCHED:
                 if (extra != null) {
@@ -325,10 +366,10 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
 
         if (mIsReady && focus) {
             setFocusAreaIndicator();
-            try{
+            try {
                 mCameraStreamingManager.doSingleTapUp((int) e.getX(), (int) e.getY());
-            }catch (Exception ex){
-                Log.e(TAG,ex.getMessage());
+            } catch (Exception ex) {
+                Log.e(TAG, ex.getMessage());
             }
 
             return true;
@@ -366,7 +407,6 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
         }
         return false;
     }
-
 
 
     @Override
