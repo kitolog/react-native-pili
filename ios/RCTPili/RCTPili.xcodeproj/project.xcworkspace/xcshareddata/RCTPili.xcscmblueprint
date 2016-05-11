@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "65A59F5ACBA41BA8AE893E703691924D7DFA0B95",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "65A59F5ACBA41BA8AE893E703691924D7DFA0B95" : 0,
+    "EA4CBC069665BEB87B9C6AC1471EC716B9470118" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "E0F4188A-AFF7-43FE-B1B9-F80E572AB80E",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "65A59F5ACBA41BA8AE893E703691924D7DFA0B95" : "react-native-pili\/",
+    "EA4CBC069665BEB87B9C6AC1471EC716B9470118" : ".."
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "RCTPili",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "ios\/RCTPili\/RCTPili.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:buhe\/react-native-pili.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "65A59F5ACBA41BA8AE893E703691924D7DFA0B95"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:buhe\/pilipili.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "EA4CBC069665BEB87B9C6AC1471EC716B9470118"
+    }
+  ]
+}
