@@ -6,10 +6,10 @@
 //  Copyright © 2016年 pili. All rights reserved.
 //
 
-#import "RCTPlayerManger.h"
+#import "RCTPlayerManager.h"
 #import "RCTPlayer.h"
 
-@implementation RCTPlayerManger
+@implementation RCTPlayerManager
 RCT_EXPORT_MODULE();
 
 @synthesize bridge = _bridge;
@@ -17,6 +17,11 @@ RCT_EXPORT_MODULE();
 - (UIView *)view
 {
     return [[RCTPlayer alloc] initWithEventDispatcher:self.bridge.eventDispatcher];
+}
+
+- (dispatch_queue_t)methodQueue
+{
+    return dispatch_get_main_queue();
 }
 
 RCT_EXPORT_VIEW_PROPERTY(source, NSDictionary);

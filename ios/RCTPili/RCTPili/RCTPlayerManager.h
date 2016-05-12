@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "RCTViewManager.h"
 
-@interface RCTPlayerManger : RCTViewManager
+@interface RCTPlayerManager : RCTViewManager
 
 @end

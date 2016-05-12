@@ -34,7 +34,7 @@
 		780D29131CE450FD004A07DE /* libcommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 780D29101CE450FD004A07DE /* libcommon.a */; };
 		780D29141CE450FD004A07DE /* libdecoder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 780D29111CE450FD004A07DE /* libdecoder.a */; };
 		780D29151CE450FD004A07DE /* libPLPlayerKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 780D29121CE450FD004A07DE /* libPLPlayerKit.a */; };
-		780D29181CE45204004A07DE /* RCTPlayerManger.m in Sources */ = {isa = PBXBuildFile; fileRef = 780D29171CE45204004A07DE /* RCTPlayerManger.m */; };
+		780D29181CE45204004A07DE /* RCTPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 780D29171CE45204004A07DE /* RCTPlayerManager.m */; };
 		781A256D1CE4546700C9FCF5 /* RCTPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 781A256C1CE4546700C9FCF5 /* RCTPlayer.m */; };
 		783631EF1CE3408300628658 /* RCTPili.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 783631EE1CE3408300628658 /* RCTPili.h */; };
 		783631F11CE3408300628658 /* RCTPili.m in Sources */ = {isa = PBXBuildFile; fileRef = 783631F01CE3408300628658 /* RCTPili.m */; };
@@ -71,8 +71,8 @@
 		780D29101CE450FD004A07DE /* libcommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcommon.a; sourceTree = "<group>"; };
 		780D29111CE450FD004A07DE /* libdecoder.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libdecoder.a; sourceTree = "<group>"; };
 		780D29121CE450FD004A07DE /* libPLPlayerKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libPLPlayerKit.a; sourceTree = "<group>"; };
-		780D29161CE45204004A07DE /* RCTPlayerManger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTPlayerManger.h; sourceTree = "<group>"; };
-		780D29171CE45204004A07DE /* RCTPlayerManger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTPlayerManger.m; sourceTree = "<group>"; };
+		780D29161CE45204004A07DE /* RCTPlayerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTPlayerManager.h; sourceTree = "<group>"; };
+		780D29171CE45204004A07DE /* RCTPlayerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTPlayerManager.m; sourceTree = "<group>"; };
 		781A256B1CE4546700C9FCF5 /* RCTPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTPlayer.h; sourceTree = "<group>"; };
 		781A256C1CE4546700C9FCF5 /* RCTPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTPlayer.m; sourceTree = "<group>"; };
 		783631EB1CE3408300628658 /* libRCTPili.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRCTPili.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -182,8 +182,8 @@
 			children = (
 				783631EE1CE3408300628658 /* RCTPili.h */,
 				783631F01CE3408300628658 /* RCTPili.m */,
-				780D29161CE45204004A07DE /* RCTPlayerManger.h */,
-				780D29171CE45204004A07DE /* RCTPlayerManger.m */,
+				780D29161CE45204004A07DE /* RCTPlayerManager.h */,
+				780D29171CE45204004A07DE /* RCTPlayerManager.m */,
 				781A256B1CE4546700C9FCF5 /* RCTPlayer.h */,
 				781A256C1CE4546700C9FCF5 /* RCTPlayer.m */,
 			);
@@ -239,8 +239,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				783631EA1CE3408300628658 /* RCTPili */,
 				B6803DE21CE47D8600189A83 /* RCTPili-Universal */,
+				783631EA1CE3408300628658 /* RCTPili */,
 			);
 		};
 /* End PBXProject section */
@@ -266,7 +266,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				780D29181CE45204004A07DE /* RCTPlayerManger.m in Sources */,
+				780D29181CE45204004A07DE /* RCTPlayerManager.m in Sources */,
 				783631F11CE3408300628658 /* RCTPili.m in Sources */,
 				781A256D1CE4546700C9FCF5 /* RCTPlayer.m in Sources */,
 			);
@@ -427,6 +427,7 @@
 				B6803DE41CE47D8600189A83 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
