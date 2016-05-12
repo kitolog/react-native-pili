@@ -6,6 +6,20 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		B6803DE21CE47D8600189A83 /* RCTPili-Universal */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = B6803DE51CE47D8600189A83 /* Build configuration list for PBXAggregateTarget "RCTPili-Universal" */;
+			buildPhases = (
+				B6803DE61CE47D8A00189A83 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = "RCTPili-Universal";
+			productName = "RCTPili-Universal";
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		780D28D11CE41980004A07DE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780D28D01CE41980004A07DE /* CoreGraphics.framework */; };
 		780D28D31CE4198F004A07DE /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780D28D21CE4198F004A07DE /* MediaPlayer.framework */; };
@@ -208,6 +222,9 @@
 					783631EA1CE3408300628658 = {
 						CreatedOnToolsVersion = 7.3;
 					};
+					B6803DE21CE47D8600189A83 = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
 				};
 			};
 			buildConfigurationList = 783631E61CE3408300628658 /* Build configuration list for PBXProject "RCTPili" */;
@@ -223,9 +240,26 @@
 			projectRoot = "";
 			targets = (
 				783631EA1CE3408300628658 /* RCTPili */,
+				B6803DE21CE47D8600189A83 /* RCTPili-Universal */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B6803DE61CE47D8A00189A83 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# define output folder environment variable\nUNIVERSAL_OUTPUTFOLDER=${BUILD_DIR}/${CONFIGURATION}-universal\n\n# Step 1. Build Device and Simulator versions\nxcodebuild -target ${PROJECT_NAME} -configuration ${CONFIGURATION} -sdk iphoneos ARCHS='armv7 armv7s arm64' VALID_ARCHS='armv7 armv7s arm64' BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\"\nxcodebuild -target ${PROJECT_NAME} -configuration ${CONFIGURATION} -sdk iphonesimulator ARCHS='i386 x86_64' VALID_ARCHS='i386 x86_64' BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\"\n\n# make sure the output directory exists\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\n\n# Step 2. Create universal binary file using lipo\nlipo -create -output \"${UNIVERSAL_OUTPUTFOLDER}/lib${PROJECT_NAME}.a\" \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/lib${PROJECT_NAME}.a\" \"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/lib${PROJECT_NAME}.a\"\n\n# Last touch. copy the header files. Just for convenience\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/include\" \"${UNIVERSAL_OUTPUTFOLDER}/\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		783631E71CE3408300628658 /* Sources */ = {
@@ -351,6 +385,20 @@
 			};
 			name = Release;
 		};
+		B6803DE31CE47D8600189A83 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		B6803DE41CE47D8600189A83 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -371,6 +419,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		B6803DE51CE47D8600189A83 /* Build configuration list for PBXAggregateTarget "RCTPili-Universal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B6803DE31CE47D8600189A83 /* Debug */,
+				B6803DE41CE47D8600189A83 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
