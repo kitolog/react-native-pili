@@ -15,8 +15,13 @@
 		780D28DB1CE419B5004A07DE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780D28DA1CE419B5004A07DE /* QuartzCore.framework */; };
 		780D28DD1CE419BB004A07DE /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780D28DC1CE419BB004A07DE /* OpenGLES.framework */; };
 		780D28DF1CE419C4004A07DE /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780D28DE1CE419C4004A07DE /* AVFoundation.framework */; };
-		780D28E11CE419DA004A07DE /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 780D28E01CE419DA004A07DE /* libc++.tbd */; };
-		780D28E31CE419E4004A07DE /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 780D28E21CE419E4004A07DE /* libz.tbd */; };
+		780D28FC1CE41EB1004A07DE /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 780D28F81CE41E4A004A07DE /* libz.1.dylib */; };
+		780D28FD1CE41EC6004A07DE /* libc++.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 780D28FA1CE41E68004A07DE /* libc++.1.dylib */; };
+		780D29131CE450FD004A07DE /* libcommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 780D29101CE450FD004A07DE /* libcommon.a */; };
+		780D29141CE450FD004A07DE /* libdecoder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 780D29111CE450FD004A07DE /* libdecoder.a */; };
+		780D29151CE450FD004A07DE /* libPLPlayerKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 780D29121CE450FD004A07DE /* libPLPlayerKit.a */; };
+		780D29181CE45204004A07DE /* RCTPlayerManger.m in Sources */ = {isa = PBXBuildFile; fileRef = 780D29171CE45204004A07DE /* RCTPlayerManger.m */; };
+		781A256D1CE4546700C9FCF5 /* RCTPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 781A256C1CE4546700C9FCF5 /* RCTPlayer.m */; };
 		783631EF1CE3408300628658 /* RCTPili.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 783631EE1CE3408300628658 /* RCTPili.h */; };
 		783631F11CE3408300628658 /* RCTPili.m in Sources */ = {isa = PBXBuildFile; fileRef = 783631F01CE3408300628658 /* RCTPili.m */; };
 /* End PBXBuildFile section */
@@ -43,8 +48,19 @@
 		780D28DA1CE419B5004A07DE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		780D28DC1CE419BB004A07DE /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		780D28DE1CE419C4004A07DE /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		780D28E01CE419DA004A07DE /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
-		780D28E21CE419E4004A07DE /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		780D28F81CE41E4A004A07DE /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = /usr/lib/libz.1.dylib; sourceTree = "<absolute>"; };
+		780D28FA1CE41E68004A07DE /* libc++.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.1.dylib"; path = "/usr/lib/libc++.1.dylib"; sourceTree = "<absolute>"; };
+		780D290B1CE450FD004A07DE /* PLPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLPlayer.h; sourceTree = "<group>"; };
+		780D290C1CE450FD004A07DE /* PLPlayerError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLPlayerError.h; sourceTree = "<group>"; };
+		780D290D1CE450FD004A07DE /* PLPlayerKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLPlayerKit.h; sourceTree = "<group>"; };
+		780D290E1CE450FD004A07DE /* PLPlayerOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLPlayerOption.h; sourceTree = "<group>"; };
+		780D29101CE450FD004A07DE /* libcommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcommon.a; sourceTree = "<group>"; };
+		780D29111CE450FD004A07DE /* libdecoder.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libdecoder.a; sourceTree = "<group>"; };
+		780D29121CE450FD004A07DE /* libPLPlayerKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libPLPlayerKit.a; sourceTree = "<group>"; };
+		780D29161CE45204004A07DE /* RCTPlayerManger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTPlayerManger.h; sourceTree = "<group>"; };
+		780D29171CE45204004A07DE /* RCTPlayerManger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTPlayerManger.m; sourceTree = "<group>"; };
+		781A256B1CE4546700C9FCF5 /* RCTPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTPlayer.h; sourceTree = "<group>"; };
+		781A256C1CE4546700C9FCF5 /* RCTPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTPlayer.m; sourceTree = "<group>"; };
 		783631EB1CE3408300628658 /* libRCTPili.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRCTPili.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		783631EE1CE3408300628658 /* RCTPili.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTPili.h; sourceTree = "<group>"; };
 		783631F01CE3408300628658 /* RCTPili.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTPili.m; sourceTree = "<group>"; };
@@ -55,10 +71,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				780D28E31CE419E4004A07DE /* libz.tbd in Frameworks */,
-				780D28E11CE419DA004A07DE /* libc++.tbd in Frameworks */,
+				780D29141CE450FD004A07DE /* libdecoder.a in Frameworks */,
+				780D29151CE450FD004A07DE /* libPLPlayerKit.a in Frameworks */,
+				780D28FD1CE41EC6004A07DE /* libc++.1.dylib in Frameworks */,
+				780D28FC1CE41EB1004A07DE /* libz.1.dylib in Frameworks */,
 				780D28DF1CE419C4004A07DE /* AVFoundation.framework in Frameworks */,
 				780D28DD1CE419BB004A07DE /* OpenGLES.framework in Frameworks */,
+				780D29131CE450FD004A07DE /* libcommon.a in Frameworks */,
 				780D28DB1CE419B5004A07DE /* QuartzCore.framework in Frameworks */,
 				780D28D91CE419A9004A07DE /* Accelerate.framework in Frameworks */,
 				780D28D71CE4199F004A07DE /* AudioToolbox.framework in Frameworks */,
@@ -71,11 +90,11 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		783631E21CE3408300628658 = {
+		780D28F71CE41CB1004A07DE /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				780D28E21CE419E4004A07DE /* libz.tbd */,
-				780D28E01CE419DA004A07DE /* libc++.tbd */,
+				780D28FA1CE41E68004A07DE /* libc++.1.dylib */,
+				780D28F81CE41E4A004A07DE /* libz.1.dylib */,
 				780D28DE1CE419C4004A07DE /* AVFoundation.framework */,
 				780D28DC1CE419BB004A07DE /* OpenGLES.framework */,
 				780D28DA1CE419B5004A07DE /* QuartzCore.framework */,
@@ -84,6 +103,53 @@
 				780D28D41CE41998004A07DE /* CoreAudio.framework */,
 				780D28D21CE4198F004A07DE /* MediaPlayer.framework */,
 				780D28D01CE41980004A07DE /* CoreGraphics.framework */,
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
+		780D29081CE450FD004A07DE /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				780D29091CE450FD004A07DE /* include */,
+				780D290F1CE450FD004A07DE /* lib */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		780D29091CE450FD004A07DE /* include */ = {
+			isa = PBXGroup;
+			children = (
+				780D290A1CE450FD004A07DE /* PLPlayerKit */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		780D290A1CE450FD004A07DE /* PLPlayerKit */ = {
+			isa = PBXGroup;
+			children = (
+				780D290B1CE450FD004A07DE /* PLPlayer.h */,
+				780D290C1CE450FD004A07DE /* PLPlayerError.h */,
+				780D290D1CE450FD004A07DE /* PLPlayerKit.h */,
+				780D290E1CE450FD004A07DE /* PLPlayerOption.h */,
+			);
+			path = PLPlayerKit;
+			sourceTree = "<group>";
+		};
+		780D290F1CE450FD004A07DE /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				780D29101CE450FD004A07DE /* libcommon.a */,
+				780D29111CE450FD004A07DE /* libdecoder.a */,
+				780D29121CE450FD004A07DE /* libPLPlayerKit.a */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		783631E21CE3408300628658 = {
+			isa = PBXGroup;
+			children = (
+				780D29081CE450FD004A07DE /* Library */,
+				780D28F71CE41CB1004A07DE /* Libraries */,
 				783631ED1CE3408300628658 /* RCTPili */,
 				783631EC1CE3408300628658 /* Products */,
 			);
@@ -102,6 +168,10 @@
 			children = (
 				783631EE1CE3408300628658 /* RCTPili.h */,
 				783631F01CE3408300628658 /* RCTPili.m */,
+				780D29161CE45204004A07DE /* RCTPlayerManger.h */,
+				780D29171CE45204004A07DE /* RCTPlayerManger.m */,
+				781A256B1CE4546700C9FCF5 /* RCTPlayer.h */,
+				781A256C1CE4546700C9FCF5 /* RCTPlayer.m */,
 			);
 			path = RCTPili;
 			sourceTree = "<group>";
@@ -162,7 +232,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				780D29181CE45204004A07DE /* RCTPlayerManger.m in Sources */,
 				783631F11CE3408300628658 /* RCTPili.m in Sources */,
+				781A256D1CE4546700C9FCF5 /* RCTPlayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,6 +326,11 @@
 		783631F51CE3408300628658 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../../node_modules/react-native/React/**";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)$(LOCAL_LIBRARY_DIR)/lib",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -263,6 +340,11 @@
 		783631F61CE3408300628658 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../../node_modules/react-native/React/**";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)$(LOCAL_LIBRARY_DIR)/lib",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
