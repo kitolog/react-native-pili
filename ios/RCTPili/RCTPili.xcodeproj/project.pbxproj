@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		780D28D11CE41980004A07DE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780D28D01CE41980004A07DE /* CoreGraphics.framework */; };
+		780D28D31CE4198F004A07DE /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780D28D21CE4198F004A07DE /* MediaPlayer.framework */; };
+		780D28D51CE41998004A07DE /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780D28D41CE41998004A07DE /* CoreAudio.framework */; };
+		780D28D71CE4199F004A07DE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780D28D61CE4199F004A07DE /* AudioToolbox.framework */; };
+		780D28D91CE419A9004A07DE /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780D28D81CE419A9004A07DE /* Accelerate.framework */; };
+		780D28DB1CE419B5004A07DE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780D28DA1CE419B5004A07DE /* QuartzCore.framework */; };
+		780D28DD1CE419BB004A07DE /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780D28DC1CE419BB004A07DE /* OpenGLES.framework */; };
+		780D28DF1CE419C4004A07DE /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 780D28DE1CE419C4004A07DE /* AVFoundation.framework */; };
+		780D28E11CE419DA004A07DE /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 780D28E01CE419DA004A07DE /* libc++.tbd */; };
+		780D28E31CE419E4004A07DE /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 780D28E21CE419E4004A07DE /* libz.tbd */; };
 		783631EF1CE3408300628658 /* RCTPili.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 783631EE1CE3408300628658 /* RCTPili.h */; };
 		783631F11CE3408300628658 /* RCTPili.m in Sources */ = {isa = PBXBuildFile; fileRef = 783631F01CE3408300628658 /* RCTPili.m */; };
 /* End PBXBuildFile section */
@@ -25,6 +35,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		780D28D01CE41980004A07DE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		780D28D21CE4198F004A07DE /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		780D28D41CE41998004A07DE /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		780D28D61CE4199F004A07DE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		780D28D81CE419A9004A07DE /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		780D28DA1CE419B5004A07DE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		780D28DC1CE419BB004A07DE /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		780D28DE1CE419C4004A07DE /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		780D28E01CE419DA004A07DE /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		780D28E21CE419E4004A07DE /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		783631EB1CE3408300628658 /* libRCTPili.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRCTPili.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		783631EE1CE3408300628658 /* RCTPili.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTPili.h; sourceTree = "<group>"; };
 		783631F01CE3408300628658 /* RCTPili.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTPili.m; sourceTree = "<group>"; };
@@ -35,6 +55,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				780D28E31CE419E4004A07DE /* libz.tbd in Frameworks */,
+				780D28E11CE419DA004A07DE /* libc++.tbd in Frameworks */,
+				780D28DF1CE419C4004A07DE /* AVFoundation.framework in Frameworks */,
+				780D28DD1CE419BB004A07DE /* OpenGLES.framework in Frameworks */,
+				780D28DB1CE419B5004A07DE /* QuartzCore.framework in Frameworks */,
+				780D28D91CE419A9004A07DE /* Accelerate.framework in Frameworks */,
+				780D28D71CE4199F004A07DE /* AudioToolbox.framework in Frameworks */,
+				780D28D51CE41998004A07DE /* CoreAudio.framework in Frameworks */,
+				780D28D31CE4198F004A07DE /* MediaPlayer.framework in Frameworks */,
+				780D28D11CE41980004A07DE /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +74,16 @@
 		783631E21CE3408300628658 = {
 			isa = PBXGroup;
 			children = (
+				780D28E21CE419E4004A07DE /* libz.tbd */,
+				780D28E01CE419DA004A07DE /* libc++.tbd */,
+				780D28DE1CE419C4004A07DE /* AVFoundation.framework */,
+				780D28DC1CE419BB004A07DE /* OpenGLES.framework */,
+				780D28DA1CE419B5004A07DE /* QuartzCore.framework */,
+				780D28D81CE419A9004A07DE /* Accelerate.framework */,
+				780D28D61CE4199F004A07DE /* AudioToolbox.framework */,
+				780D28D41CE41998004A07DE /* CoreAudio.framework */,
+				780D28D21CE4198F004A07DE /* MediaPlayer.framework */,
+				780D28D01CE41980004A07DE /* CoreGraphics.framework */,
 				783631ED1CE3408300628658 /* RCTPili */,
 				783631EC1CE3408300628658 /* Products */,
 			);
@@ -248,6 +288,7 @@
 				783631F61CE3408300628658 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
