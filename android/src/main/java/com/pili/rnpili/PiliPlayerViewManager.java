@@ -34,6 +34,7 @@ public class PiliPlayerViewManager extends SimpleViewManager<PLVideoView> implem
     private static final int MEDIA_INFO_BUFFERING_START = 701;
     private static final int MEDIA_INFO_BUFFERING_END = 702;
     private static final int MEDIA_INFO_AUDIO_RENDERING_START = 10002;
+    private boolean started;
 
     public enum Events {
         //        READY("onReady"),
@@ -141,6 +142,7 @@ public class PiliPlayerViewManager extends SimpleViewManager<PLVideoView> implem
 
     @ReactProp(name = "started")
     public void setStarted(PLVideoView mVideoView, boolean started) {
+        this.started = started;
         if (started) {
             mVideoView.start();
         } else {
