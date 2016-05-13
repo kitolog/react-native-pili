@@ -13,6 +13,8 @@
 @implementation RCTPlayer{
     RCTEventDispatcher *_eventDispatcher;
     PLPlayer *_plplayer;
+    bool _started;
+    bool _muted;
 }
 
 static NSString *status[] = {
@@ -31,6 +33,8 @@ static NSString *status[] = {
 {
     if ((self = [super init])) {
         _eventDispatcher = eventDispatcher;
+        _started = YES;
+        _muted = NO;
         [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
          self.reconnectCount = 0;
     }
@@ -80,10 +84,28 @@ static NSString *status[] = {
     
 }
 
-- (void)startPlayer {
+- (void) setStarted:(BOOL) started{
+    if(started != _started){
+    if(started){
+        [_plplayer resume];
+        _started = started;
+    }else{
+        [_plplayer pause];
+        _started = started;
+    }
+    }
+}
 
+- (void) setMuted:(BOOL) muted {
+    _muted = muted;
+    [_plplayer setMute:muted];
+    
+}
+
+- (void)startPlayer {
     [UIApplication sharedApplication].idleTimerDisabled = YES;
     [_plplayer play];
+    _started = true;
 }
 
 #pragma mark - <PLPlayerDelegate>

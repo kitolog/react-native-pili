@@ -8,6 +8,8 @@ var iface = {
       propTypes: {
         ...View.propTypes,
       source: PropTypes.object,
+      started:PropTypes.bool, //iOS only
+      muted:PropTypes.bool, //iOS only
     },
     };
 
