@@ -55,6 +55,8 @@ iOS TODO
     live:true, //live streaming ?
     hardCodec:false, //hard codec [recommended false]
     }}
+    started={true} //iOS only
+    muted={false} //iOS only
     style={{
       height:200,
       width:200,
