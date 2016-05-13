@@ -4,7 +4,6 @@
 - [x] Android Streaming 90%
 - [x] iOS Player 70%
 - [ ] iOS Streaming 
-iOS TODO
 
 ##Usage
 ###1. 推流
