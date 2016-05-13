@@ -15,38 +15,25 @@
     PLPlayer *_plplayer;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
+static NSString *status[] = {
+    @"PLPlayerStatusUnknow",
+    @"PLPlayerStatusPreparing",
+    @"PLPlayerStatusReady",
+    @"PLPlayerStatusCaching",
+    @"PLPlayerStatusPlaying",
+    @"PLPlayerStatusPaused",
+    @"PLPlayerStatusStopped",
+    @"PLPlayerStatusError"
+};
+
+
 - (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher
 {
     if ((self = [super init])) {
         _eventDispatcher = eventDispatcher;
-        //
-        //        _rate = 1.0;
-        //        _volume = 1.0;
-        //        _resizeMode = @"AVLayerVideoGravityResizeAspectFill";
-        //        _pendingSeek = false;
-        //        _pendingSeekTime = 0.0f;
-        //        _lastSeekTime = 0.0f;
-        //        _progressUpdateInterval = 250;
-        //        _controls = NO;
-        //
-        //        [[NSNotificationCenter defaultCenter] addObserver:self
-        //                                                 selector:@selector(applicationWillResignActive:)
-        //                                                     name:UIApplicationWillResignActiveNotification
-        //                                                   object:nil];
-        //
-        //        [[NSNotificationCenter defaultCenter] addObserver:self
-        //                                                 selector:@selector(applicationWillEnterForeground:)
-        //                                                     name:UIApplicationWillEnterForegroundNotification
-        //                                                   object:nil];
-        // 初始化 PLPlayerOption 对象
-            }
+        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+         self.reconnectCount = 0;
+    }
     
     return self;
 };
@@ -54,19 +41,21 @@
 - (void) setSource:(NSDictionary *)source
 {
     NSString *uri = source[@"uri"];
+    bool backgroundPlay = source[@"backgroundPlay"] == nil ? false : source[@"backgroundPlay"];
     
     PLPlayerOption *option = [PLPlayerOption defaultOption];
     
     // 更改需要修改的 option 属性键所对应的值
     [option setOptionValue:@15 forKey:PLPlayerOptionKeyTimeoutIntervalForMediaPackets];
+
     _plplayer = [PLPlayer playerWithURL:[[NSURL alloc] initWithString:uri] option:option];
 
-//    _plplayer.delegate = self;
+    _plplayer.delegate = self;
     _plplayer.delegateQueue = dispatch_get_main_queue();
-//    _plplayer.backgroundPlayEnable = enableBackgroundPlay;
-#if !enableBackgroundPlay
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startPlayer) name:UIApplicationWillEnterForegroundNotification object:nil];
-#endif
+    _plplayer.backgroundPlayEnable = backgroundPlay;
+    if(backgroundPlay){
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startPlayer) name:UIApplicationWillEnterForegroundNotification object:nil];
+    }
     [self setupUI];
     
     [self startPlayer];
@@ -87,36 +76,39 @@
         
         NSArray *constraints = [NSArray arrayWithObjects:centerX, centerY,width,height, nil];
         [self addConstraints: constraints];
-//        if (!playerView.superview) {
-//            playerView.contentMode = UIViewContentModeScaleAspectFit;
-//            playerView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
-//            [self addSubview:playerView];
-//            
-//            
-////            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
-////            [self.view addGestureRecognizer:tap];
-//        }
     }
     
 }
 
 - (void)startPlayer {
-    [self addActivityIndicatorView]; //用户自己通过事件加  //TODO
+
     [UIApplication sharedApplication].idleTimerDisabled = YES;
     [_plplayer play];
 }
 
-- (void)addActivityIndicatorView {
-    if (self.activityIndicatorView) {
-        return;
-    }
-    UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    activityIndicatorView.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
-    [self addSubview:activityIndicatorView];
-    [activityIndicatorView stopAnimating];
-    
-    self.activityIndicatorView = activityIndicatorView;
+#pragma mark - <PLPlayerDelegate>
+
+- (void)player:(nonnull PLPlayer *)player statusDidChange:(PLPlayerStatus)state {
+    //TODO - send event
+    NSLog(@"%@", status[state]);
 }
 
+- (void)player:(nonnull PLPlayer *)player stoppedWithError:(nullable NSError *)error {
+    [self tryReconnect:error];
+}
+
+- (void)tryReconnect:(nullable NSError *)error {
+    if (self.reconnectCount < 3) {
+        _reconnectCount ++;
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"错误" message:[NSString stringWithFormat:@"错误 %@，播放器将在%.1f秒后进行第 %d 次重连", error.localizedDescription,0.5 * pow(2, self.reconnectCount - 1), _reconnectCount] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * pow(2, self.reconnectCount) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [_plplayer play];
+        });
+    }else {
+        [UIApplication sharedApplication].idleTimerDisabled = NO;
+        NSLog(@"%@", error);
+    }
+}
 
 @end

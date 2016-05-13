@@ -12,9 +12,10 @@
 
 @class RCTEventDispatcher;
 
-@interface RCTPlayer : UIView
+@interface RCTPlayer : UIView<PLPlayerDelegate>
 
-@property (nonatomic, weak) UIActivityIndicatorView *activityIndicatorView;
+@property (nonatomic, assign) int reconnectCount;
+
 
 - (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher NS_DESIGNATED_INITIALIZER;
 
