@@ -65,10 +65,10 @@
       height:200,
       width:200,
     }}
-    onLoading={()=>{}}
-    onPaused={()=>{}}
-    onShutdown={()=>{}}
-    onError={()=>{}}
-    onPlaying={()=>{}}
+    onLoading={()=>{}} //loading from remote or local
+    onPaused={()=>{}} //pause event
+    onShutdown={()=>{}} //stopped event
+    onError={()=>{}} //error event
+    onPlaying={()=>{}} //play event
     />
 ```
