@@ -1,6 +1,9 @@
 #Pili Streaming Cloud React Native SDK
 ##Installation
-Android Preview Version
+- [x] Android Player 70%
+- [x] Android Streaming 90%
+- [x] iOS Player 70%
+- [ ] iOS Streaming 
 iOS TODO
 
 ##Usage
