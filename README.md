@@ -1,7 +1,7 @@
 #Pili Streaming Cloud React Native SDK
 ##Installation
 ```
-Run npm install react-native-video --save
+Run npm install react-native-pili --save
 ```
 ###iOS
 1. In XCode, in the project navigator, right click Libraries ➜ Add Files to [your project's name]
