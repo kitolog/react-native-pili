@@ -16,7 +16,7 @@ Run npm install react-native-video --save
 include ':react-native-pili'
 project(':react-native-pili').projectDir = new File(settingsDir, '../node_modules/react-native-pili/android')
 ```
-**android/app/build.gradl**
+**android/app/build.gradle**
 ```
 dependencies {
     ...
