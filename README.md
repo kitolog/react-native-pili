@@ -1,8 +1,8 @@
 #Pili Streaming Cloud React Native SDK
 ##Installation
-
+```
 Run npm install react-native-video --save
-
+```
 ###iOS
 1. In XCode, in the project navigator, right click Libraries ➜ Add Files to [your project's name]
 2. Go to node_modules ➜ react-native-pili ➜ RCTPili and add RCTPili.xcodeproj
@@ -11,20 +11,19 @@ Run npm install react-native-video --save
 
 ###Android
 
-android/settings.gradle
-
+**android/settings.gradle**
 ```
 include ':react-native-pili'
 project(':react-native-pili').projectDir = new File(settingsDir, '../node_modules/react-native-pili/android')
 ```
-android/app/build.gradle
+**android/app/build.gradl**
 ```
 dependencies {
     ...
     compile project(':react-native-pili')
 }
 ```
-MainActivity.java
+**MainActivity.java**
 
 On top, where imports are:
 ```java
