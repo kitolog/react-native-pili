@@ -41,12 +41,12 @@
          bitrate:96 * 1024
        },
     started={false} //streaming status
-    onReady={()->{}} //onReady event
-    onConnecting={()->{}} //onConnecting event
-    onStreaming={()->{}} //onStreaming event
-    onShutdown={()->{}} //onShutdown event
-    onIOError={()->{}} //onIOError event
-    onDisconnected={()->{}} //onDisconnected event
+    onReady={()=>{}} //onReady event
+    onConnecting={()=>{}} //onConnecting event
+    onStreaming={()=>{}} //onStreaming event
+    onShutdown={()=>{}} //onShutdown event
+    onIOError={()=>{}} //onIOError event
+    onDisconnected={()=>{}} //onDisconnected event
     />
 ```
 ###2. 直播播放
@@ -65,5 +65,10 @@
       height:200,
       width:200,
     }}
+    onLoading={()=>{}}
+    onPaused={()=>{}}
+    onShutdown={()=>{}}
+    onError={()=>{}}
+    onPlaying={()=>{}}
     />
 ```
