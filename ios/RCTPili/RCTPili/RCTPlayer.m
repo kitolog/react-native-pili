@@ -77,15 +77,25 @@
     if (_plplayer.status != PLPlayerStatusError) {
         // add player view
         UIView *playerView = _plplayer.playerView;
-        if (!playerView.superview) {
-            playerView.contentMode = UIViewContentModeScaleAspectFit;
-            playerView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
-            [self addSubview:playerView];
-            
-            
-//            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
-//            [self.view addGestureRecognizer:tap];
-        }
+        [self addSubview:playerView];
+         [playerView setTranslatesAutoresizingMaskIntoConstraints:NO];
+        
+        NSLayoutConstraint *centerX = [NSLayoutConstraint constraintWithItem:playerView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0];
+        NSLayoutConstraint *centerY = [NSLayoutConstraint constraintWithItem:playerView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0];
+        NSLayoutConstraint *width = [NSLayoutConstraint constraintWithItem:playerView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0];
+        NSLayoutConstraint *height = [NSLayoutConstraint constraintWithItem:playerView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0];
+        
+        NSArray *constraints = [NSArray arrayWithObjects:centerX, centerY,width,height, nil];
+        [self addConstraints: constraints];
+//        if (!playerView.superview) {
+//            playerView.contentMode = UIViewContentModeScaleAspectFit;
+//            playerView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
+//            [self addSubview:playerView];
+//            
+//            
+////            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
+////            [self.view addGestureRecognizer:tap];
+//        }
     }
     
 }
