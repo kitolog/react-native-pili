@@ -50,10 +50,10 @@ iOS TODO
 <Player
   source={{
     uri:"rtmp://live.hkstv.hk.lxdns.com/live/hks",
-    controller: true, //Controller ui
-    timeout: 10 * 1000, //live streaming timeout (ms)
-    live:true, //live streaming ?
-    hardCodec:false, //hard codec [recommended false]
+    controller: true, //Controller ui  Android only
+    timeout: 10 * 1000, //live streaming timeout (ms) Android only
+    live:true, //live streaming ? Android only
+    hardCodec:false, //hard codec [recommended false]  Android only
     }}
     started={true} //iOS only
     muted={false} //iOS only
