@@ -9,6 +9,7 @@
 #import "RCTPlayer.h"
 #import "RCTBridgeModule.h"
 #import "RCTEventDispatcher.h"
+#import "UIView+React.h"
 
 @implementation RCTPlayer{
     RCTEventDispatcher *_eventDispatcher;
@@ -51,6 +52,10 @@ static NSString *status[] = {
     
     // 更改需要修改的 option 属性键所对应的值
     [option setOptionValue:@15 forKey:PLPlayerOptionKeyTimeoutIntervalForMediaPackets];
+    
+    if(_plplayer){
+        [_plplayer stop]; //TODO View 被卸载时 也要调用
+    }
 
     _plplayer = [PLPlayer playerWithURL:[[NSURL alloc] initWithString:uri] option:option];
 
@@ -112,6 +117,25 @@ static NSString *status[] = {
 
 - (void)player:(nonnull PLPlayer *)player statusDidChange:(PLPlayerStatus)state {
     //TODO - send event
+    switch (state) {
+        case PLPlayerStatusCaching:
+            [_eventDispatcher sendInputEventWithName:@"onLoading" body:@{@"target": self.reactTag}];
+            break;
+        case PLPlayerStatusPlaying:
+            [_eventDispatcher sendInputEventWithName:@"onPlaying" body:@{@"target": self.reactTag}];
+            break;
+        case PLPlayerStatusPaused:
+            [_eventDispatcher sendInputEventWithName:@"onPaused" body:@{@"target": self.reactTag}];
+            break;
+        case PLPlayerStatusStopped:
+            [_eventDispatcher sendInputEventWithName:@"onShutdown" body:@{@"target": self.reactTag}];
+            break;
+        case PLPlayerStatusError:
+            [_eventDispatcher sendInputEventWithName:@"onError" body:@{@"target": self.reactTag , @"errorCode": [NSNumber numberWithUnsignedInt:0]}];
+            break;
+        default:
+            break;
+    }
     NSLog(@"%@", status[state]);
 }
 

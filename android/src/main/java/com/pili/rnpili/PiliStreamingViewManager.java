@@ -238,6 +238,10 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
 
     @ReactProp(name = "started")
     public void setStarted(AspectFrameLayout view, boolean started) {
+        if(this.started == started){
+            //ignore
+            return;
+        }
         this.started = started;
         if (mIsReady) {  //没有准备好则只赋值,等待onStateChanged 唤起
             if (started) {

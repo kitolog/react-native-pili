@@ -2,21 +2,58 @@ package com.pili.rnpili;
 
 import android.util.Log;
 
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.LifecycleEventListener;
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
+import com.facebook.react.uimanager.events.RCTEventEmitter;
 import com.pili.pldroid.player.AVOptions;
 import com.pili.pldroid.player.PLMediaPlayer;
 import com.pili.pldroid.player.widget.PLVideoView;
 import com.pili.rnpili.support.MediaController;
 
+import java.util.Map;
+
+import javax.annotation.Nullable;
+
 /**
  * Created by buhe on 16/4/29.
  */
-public class PiliPlayerViewManager extends SimpleViewManager<PLVideoView> {
+public class PiliPlayerViewManager extends SimpleViewManager<PLVideoView> implements LifecycleEventListener {
     private ThemedReactContext reactContext;
     private static final String TAG = PiliPlayerViewManager.class.getSimpleName();
+    private PLVideoView mVideoView;
+    private RCTEventEmitter mEventEmitter;
+
+    private static final int MEDIA_INFO_UNKNOWN = 1;
+    private static final int MEDIA_INFO_VIDEO_RENDERING_START = 3;
+    private static final int MEDIA_INFO_BUFFERING_START = 701;
+    private static final int MEDIA_INFO_BUFFERING_END = 702;
+    private static final int MEDIA_INFO_AUDIO_RENDERING_START = 10002;
+
+    public enum Events {
+        //        READY("onReady"),
+        LOADING("onLoading"),
+        PAUSE("onPaused"),
+        SHUTDOWN("onShutdown"),
+        ERROR("onError"),
+        PLAYING("onPlaying");
+
+        private final String mName;
+
+        Events(final String name) {
+            mName = name;
+        }
+
+        @Override
+        public String toString() {
+            return mName;
+        }
+    }
 
     @Override
     public String getName() {
@@ -24,10 +61,20 @@ public class PiliPlayerViewManager extends SimpleViewManager<PLVideoView> {
     }
 
     @Override
+    @Nullable
+    public Map getExportedCustomDirectEventTypeConstants() {
+        MapBuilder.Builder builder = MapBuilder.builder();
+        for (Events event : Events.values()) {
+            builder.put(event.toString(), MapBuilder.of("registrationName", event.toString()));
+        }
+        return builder.build();
+    }
+
+    @Override
     protected PLVideoView createViewInstance(ThemedReactContext reactContext) {
         this.reactContext = reactContext;
-        PLVideoView mVideoView = new PLVideoView(reactContext);
-        // Set some listeners
+        mEventEmitter = reactContext.getJSModule(RCTEventEmitter.class);
+        mVideoView = new PLVideoView(reactContext);
         // Set some listeners
         mVideoView.setOnPreparedListener(mOnPreparedListener);
         mVideoView.setOnInfoListener(mOnInfoListener);
@@ -36,6 +83,8 @@ public class PiliPlayerViewManager extends SimpleViewManager<PLVideoView> {
         mVideoView.setOnCompletionListener(mOnCompletionListener);
         mVideoView.setOnSeekCompleteListener(mOnSeekCompleteListener);
         mVideoView.setOnErrorListener(mOnErrorListener);
+
+        reactContext.addLifecycleEventListener(this);
         return mVideoView;
     }
 
@@ -90,11 +139,27 @@ public class PiliPlayerViewManager extends SimpleViewManager<PLVideoView> {
 
     }
 
+    @ReactProp(name = "started")
+    public void setStarted(PLVideoView mVideoView, boolean started) {
+        if (started) {
+            mVideoView.start();
+        } else {
+            mVideoView.pause();
+            mEventEmitter.receiveEvent(getTargetId(), Events.PAUSE.toString(), Arguments.createMap());
+        }
+    }
+
+    @ReactProp(name = "muted")
+    public void setMuted(PLVideoView mVideoView, boolean muted){
+//        mVideoView.mute
+        //Android not implements
+    }
 
     private PLMediaPlayer.OnPreparedListener mOnPreparedListener = new PLMediaPlayer.OnPreparedListener() {
         @Override
         public void onPrepared(PLMediaPlayer plMediaPlayer) {
             Log.d(TAG, "onPrepared ! ");
+            mEventEmitter.receiveEvent(getTargetId(), Events.LOADING.toString(), Arguments.createMap());
         }
     };
 
@@ -102,7 +167,19 @@ public class PiliPlayerViewManager extends SimpleViewManager<PLVideoView> {
         @Override
         public boolean onInfo(PLMediaPlayer plMediaPlayer, int what, int extra) {
             Log.d(TAG, "onInfo: " + what + ", " + extra);
-            return false;
+
+            switch (what) {
+                case MEDIA_INFO_VIDEO_RENDERING_START:
+                    mEventEmitter.receiveEvent(getTargetId(), Events.PLAYING.toString(), Arguments.createMap());
+                    break;
+                case MEDIA_INFO_BUFFERING_START:
+                    mEventEmitter.receiveEvent(getTargetId(), Events.LOADING.toString(), Arguments.createMap());
+                    break;
+                case MEDIA_INFO_BUFFERING_END:
+                    mEventEmitter.receiveEvent(getTargetId(), Events.PLAYING.toString(), Arguments.createMap());
+                    break;
+            }
+            return true;
         }
     };
 
@@ -110,33 +187,9 @@ public class PiliPlayerViewManager extends SimpleViewManager<PLVideoView> {
         @Override
         public boolean onError(PLMediaPlayer plMediaPlayer, int errorCode) {
             Log.e(TAG, "Error happened, errorCode = " + errorCode);
-            switch (errorCode) {
-                case PLMediaPlayer.ERROR_CODE_INVALID_URI:
-//                    showToastTips("Invalid URL !");
-                    break;
-                case PLMediaPlayer.ERROR_CODE_404_NOT_FOUND:
-//                    showToastTips("404 resource not found !");
-                    break;
-                case PLMediaPlayer.ERROR_CODE_CONNECTION_REFUSED:
-//                    showToastTips("Connection refused !");
-                    break;
-                case PLMediaPlayer.ERROR_CODE_CONNECTION_TIMEOUT:
-//                    showToastTips("Connection timeout !");
-                    break;
-                case PLMediaPlayer.ERROR_CODE_EMPTY_PLAYLIST:
-//                    showToastTips("Empty playlist !");
-                    break;
-                case PLMediaPlayer.ERROR_CODE_STREAM_DISCONNECTED:
-//                    showToastTips("Stream disconnected !");
-                    break;
-                case PLMediaPlayer.ERROR_CODE_IO_ERROR:
-//                    showToastTips("Network IO Error !");
-                    break;
-                case PLMediaPlayer.MEDIA_ERROR_UNKNOWN:
-                default:
-//                    showToastTips("unknown error !");
-                    break;
-            }
+            WritableMap event = Arguments.createMap();
+            event.putInt("errorCode",errorCode);
+            mEventEmitter.receiveEvent(getTargetId(), Events.ERROR.toString(), Arguments.createMap());
             return true;
         }
     };
@@ -145,6 +198,7 @@ public class PiliPlayerViewManager extends SimpleViewManager<PLVideoView> {
         @Override
         public void onCompletion(PLMediaPlayer plMediaPlayer) {
             Log.d(TAG, "Play Completed !");
+            mEventEmitter.receiveEvent(getTargetId(), Events.SHUTDOWN.toString(), Arguments.createMap());
         }
     };
 
@@ -171,4 +225,22 @@ public class PiliPlayerViewManager extends SimpleViewManager<PLVideoView> {
         }
     };
 
+    @Override
+    public void onHostResume() {
+        mVideoView.start();
+    }
+
+    @Override
+    public void onHostPause() {
+        mVideoView.pause();
+    }
+
+    @Override
+    public void onHostDestroy() {
+        mVideoView.stopPlayback();
+    }
+
+    public int getTargetId() {
+        return mVideoView.getId();
+    }
 }
