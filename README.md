@@ -94,7 +94,7 @@ Modify getPackages method
 ```javascript
 <Player
   source={{
-    uri:"rtmp://live.hkstv.hk.lxdns.com/live/hks",
+    uri:"rtmp://pili-live-rtmp.pilitest.qiniucdn.com/pilitest/xxx",
     controller: true, //Controller ui  Android only
     timeout: 10 * 1000, //live streaming timeout (ms) Android only
     live:true, //live streaming ? Android only
