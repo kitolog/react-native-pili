@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply from: "../../react-native/react_forui.gradle"
+apply from: "../react_forui.gradle"
 
 android {
     compileSdkVersion 23
