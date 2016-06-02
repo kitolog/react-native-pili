@@ -38,7 +38,57 @@
 		781A256D1CE4546700C9FCF5 /* RCTPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 781A256C1CE4546700C9FCF5 /* RCTPlayer.m */; };
 		783631EF1CE3408300628658 /* RCTPili.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 783631EE1CE3408300628658 /* RCTPili.h */; };
 		783631F11CE3408300628658 /* RCTPili.m in Sources */ = {isa = PBXBuildFile; fileRef = 783631F01CE3408300628658 /* RCTPili.m */; };
+		78A44E4F1CF6919B00C91505 /* QNDnsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A44E331CF6919B00C91505 /* QNDnsManager.m */; };
+		78A44E501CF6919B00C91505 /* QNDomain.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A44E351CF6919B00C91505 /* QNDomain.m */; };
+		78A44E511CF6919B00C91505 /* QNNetworkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A44E371CF6919B00C91505 /* QNNetworkInfo.m */; };
+		78A44E521CF6919B00C91505 /* QNRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A44E391CF6919B00C91505 /* QNRecord.m */; };
+		78A44E531CF6919B00C91505 /* QNDnspodEnterprise.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A44E3E1CF6919B00C91505 /* QNDnspodEnterprise.m */; };
+		78A44E541CF6919B00C91505 /* QNDnspodFree.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A44E401CF6919B00C91505 /* QNDnspodFree.m */; };
+		78A44E551CF6919B00C91505 /* QNHijackingDetectWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A44E431CF6919B00C91505 /* QNHijackingDetectWrapper.m */; };
+		78A44E561CF6919B00C91505 /* QNHosts.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A44E451CF6919B00C91505 /* QNHosts.m */; };
+		78A44E571CF6919B00C91505 /* QNResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A44E471CF6919B00C91505 /* QNResolver.m */; };
+		78A44E581CF6919B00C91505 /* QNTxtResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A44E491CF6919B00C91505 /* QNTxtResolver.m */; };
+		78A44E591CF6919B00C91505 /* QNDes.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A44E4C1CF6919B00C91505 /* QNDes.m */; };
+		78A44E5A1CF6919B00C91505 /* QNHex.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A44E4E1CF6919B00C91505 /* QNHex.m */; };
+		78A44E651CF691FA00C91505 /* libPLCameraStreamingKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78A44E641CF691FA00C91505 /* libPLCameraStreamingKit.a */; };
+		78A44E671CF6923400C91505 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78A44E661CF6923400C91505 /* UIKit.framework */; };
+		78A44E691CF6925F00C91505 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78A44E681CF6925F00C91505 /* CFNetwork.framework */; };
+		78A44E6B1CF6926700C91505 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78A44E6A1CF6926700C91505 /* CoreMedia.framework */; };
+		78A44E6E1CF692E100C91505 /* RCTStreamingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A44E6D1CF692E100C91505 /* RCTStreamingManager.m */; };
+		78A44E711CF6931600C91505 /* RCTStreaming.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A44E701CF6931600C91505 /* RCTStreaming.m */; };
+		78A44E811CF69B4800C91505 /* libPLStreamingKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78A44E801CF69B4800C91505 /* libPLStreamingKit.a */; };
+		78A44E9F1CF69FF500C91505 /* amf.c in Sources */ = {isa = PBXBuildFile; fileRef = 78A44E8F1CF69FF500C91505 /* amf.c */; };
+		78A44EA01CF69FF500C91505 /* error.c in Sources */ = {isa = PBXBuildFile; fileRef = 78A44E941CF69FF500C91505 /* error.c */; };
+		78A44EA11CF69FF500C91505 /* hashswf.c in Sources */ = {isa = PBXBuildFile; fileRef = 78A44E971CF69FF500C91505 /* hashswf.c */; };
+		78A44EA21CF69FF500C91505 /* log.c in Sources */ = {isa = PBXBuildFile; fileRef = 78A44E991CF69FF500C91505 /* log.c */; };
+		78A44EA31CF69FF500C91505 /* parseurl.c in Sources */ = {isa = PBXBuildFile; fileRef = 78A44E9B1CF69FF500C91505 /* parseurl.c */; };
+		78A44EA41CF69FF500C91505 /* rtmp.c in Sources */ = {isa = PBXBuildFile; fileRef = 78A44E9C1CF69FF500C91505 /* rtmp.c */; };
+		78A44EB01CF6A12800C91505 /* libGPUImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78A44EAD1CF6A0F100C91505 /* libGPUImage.a */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		78A44EAC1CF6A0F100C91505 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 78A44EA61CF6A0F100C91505 /* GPUImage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BCF1A33414DDB1EC00852800;
+			remoteInfo = GPUImage;
+		};
+		78A44EAE1CF6A0F100C91505 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 78A44EA61CF6A0F100C91505 /* GPUImage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BCE209E51943F20C002FEED8;
+			remoteInfo = GPUImageFramework;
+		};
+		78A44EB11CF6A1AD00C91505 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 78A44EA61CF6A0F100C91505 /* GPUImage.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = BCF1A33314DDB1EC00852800;
+			remoteInfo = GPUImage;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		783631E91CE3408300628658 /* CopyFiles */ = {
@@ -78,6 +128,73 @@
 		783631EB1CE3408300628658 /* libRCTPili.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRCTPili.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		783631EE1CE3408300628658 /* RCTPili.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTPili.h; sourceTree = "<group>"; };
 		783631F01CE3408300628658 /* RCTPili.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTPili.m; sourceTree = "<group>"; };
+		78A44E321CF6919B00C91505 /* QNDnsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNDnsManager.h; sourceTree = "<group>"; };
+		78A44E331CF6919B00C91505 /* QNDnsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNDnsManager.m; sourceTree = "<group>"; };
+		78A44E341CF6919B00C91505 /* QNDomain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNDomain.h; sourceTree = "<group>"; };
+		78A44E351CF6919B00C91505 /* QNDomain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNDomain.m; sourceTree = "<group>"; };
+		78A44E361CF6919B00C91505 /* QNNetworkInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNetworkInfo.h; sourceTree = "<group>"; };
+		78A44E371CF6919B00C91505 /* QNNetworkInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNetworkInfo.m; sourceTree = "<group>"; };
+		78A44E381CF6919B00C91505 /* QNRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNRecord.h; sourceTree = "<group>"; };
+		78A44E391CF6919B00C91505 /* QNRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNRecord.m; sourceTree = "<group>"; };
+		78A44E3A1CF6919B00C91505 /* QNResolverDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNResolverDelegate.h; sourceTree = "<group>"; };
+		78A44E3B1CF6919B00C91505 /* HappyDNS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HappyDNS.h; sourceTree = "<group>"; };
+		78A44E3D1CF6919B00C91505 /* QNDnspodEnterprise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNDnspodEnterprise.h; sourceTree = "<group>"; };
+		78A44E3E1CF6919B00C91505 /* QNDnspodEnterprise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNDnspodEnterprise.m; sourceTree = "<group>"; };
+		78A44E3F1CF6919B00C91505 /* QNDnspodFree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNDnspodFree.h; sourceTree = "<group>"; };
+		78A44E401CF6919B00C91505 /* QNDnspodFree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNDnspodFree.m; sourceTree = "<group>"; };
+		78A44E421CF6919B00C91505 /* QNHijackingDetectWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNHijackingDetectWrapper.h; sourceTree = "<group>"; };
+		78A44E431CF6919B00C91505 /* QNHijackingDetectWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNHijackingDetectWrapper.m; sourceTree = "<group>"; };
+		78A44E441CF6919B00C91505 /* QNHosts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNHosts.h; sourceTree = "<group>"; };
+		78A44E451CF6919B00C91505 /* QNHosts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNHosts.m; sourceTree = "<group>"; };
+		78A44E461CF6919B00C91505 /* QNResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNResolver.h; sourceTree = "<group>"; };
+		78A44E471CF6919B00C91505 /* QNResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNResolver.m; sourceTree = "<group>"; };
+		78A44E481CF6919B00C91505 /* QNTxtResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNTxtResolver.h; sourceTree = "<group>"; };
+		78A44E491CF6919B00C91505 /* QNTxtResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNTxtResolver.m; sourceTree = "<group>"; };
+		78A44E4B1CF6919B00C91505 /* QNDes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNDes.h; sourceTree = "<group>"; };
+		78A44E4C1CF6919B00C91505 /* QNDes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNDes.m; sourceTree = "<group>"; };
+		78A44E4D1CF6919B00C91505 /* QNHex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNHex.h; sourceTree = "<group>"; };
+		78A44E4E1CF6919B00C91505 /* QNHex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNHex.m; sourceTree = "<group>"; };
+		78A44E5E1CF691FA00C91505 /* PLAudioCaptureConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLAudioCaptureConfiguration.h; sourceTree = "<group>"; };
+		78A44E5F1CF691FA00C91505 /* PLCameraStreamingKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCameraStreamingKit.h; sourceTree = "<group>"; };
+		78A44E601CF691FA00C91505 /* PLCameraStreamingSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCameraStreamingSession.h; sourceTree = "<group>"; };
+		78A44E611CF691FA00C91505 /* PLSourceAccessProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLSourceAccessProtocol.h; sourceTree = "<group>"; };
+		78A44E621CF691FA00C91505 /* PLVideoCaptureConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLVideoCaptureConfiguration.h; sourceTree = "<group>"; };
+		78A44E641CF691FA00C91505 /* libPLCameraStreamingKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libPLCameraStreamingKit.a; sourceTree = "<group>"; };
+		78A44E661CF6923400C91505 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		78A44E681CF6925F00C91505 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		78A44E6A1CF6926700C91505 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		78A44E6C1CF692E100C91505 /* RCTStreamingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTStreamingManager.h; sourceTree = "<group>"; };
+		78A44E6D1CF692E100C91505 /* RCTStreamingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTStreamingManager.m; sourceTree = "<group>"; };
+		78A44E6F1CF6931600C91505 /* RCTStreaming.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTStreaming.h; sourceTree = "<group>"; };
+		78A44E701CF6931600C91505 /* RCTStreaming.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTStreaming.m; sourceTree = "<group>"; };
+		78A44E751CF69B4800C91505 /* PLAudioStreamingConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLAudioStreamingConfiguration.h; sourceTree = "<group>"; };
+		78A44E761CF69B4800C91505 /* PLBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLBuffer.h; sourceTree = "<group>"; };
+		78A44E771CF69B4800C91505 /* PLMacroDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLMacroDefines.h; sourceTree = "<group>"; };
+		78A44E781CF69B4800C91505 /* PLStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLStream.h; sourceTree = "<group>"; };
+		78A44E791CF69B4800C91505 /* PLStreamingEnv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLStreamingEnv.h; sourceTree = "<group>"; };
+		78A44E7A1CF69B4800C91505 /* PLStreamingKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLStreamingKit.h; sourceTree = "<group>"; };
+		78A44E7B1CF69B4800C91505 /* PLStreamingSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLStreamingSession.h; sourceTree = "<group>"; };
+		78A44E7C1CF69B4800C91505 /* PLStreamStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLStreamStatus.h; sourceTree = "<group>"; };
+		78A44E7D1CF69B4800C91505 /* PLTypeDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLTypeDefines.h; sourceTree = "<group>"; };
+		78A44E7E1CF69B4800C91505 /* PLVideoStreamingConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLVideoStreamingConfiguration.h; sourceTree = "<group>"; };
+		78A44E801CF69B4800C91505 /* libPLStreamingKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libPLStreamingKit.a; sourceTree = "<group>"; };
+		78A44E8F1CF69FF500C91505 /* amf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = amf.c; sourceTree = "<group>"; };
+		78A44E901CF69FF500C91505 /* amf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = amf.h; sourceTree = "<group>"; };
+		78A44E911CF69FF500C91505 /* bytes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bytes.h; sourceTree = "<group>"; };
+		78A44E921CF69FF500C91505 /* dh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dh.h; sourceTree = "<group>"; };
+		78A44E931CF69FF500C91505 /* dhgroups.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dhgroups.h; sourceTree = "<group>"; };
+		78A44E941CF69FF500C91505 /* error.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = error.c; sourceTree = "<group>"; };
+		78A44E951CF69FF500C91505 /* error.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = error.h; sourceTree = "<group>"; };
+		78A44E961CF69FF500C91505 /* handshake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = handshake.h; sourceTree = "<group>"; };
+		78A44E971CF69FF500C91505 /* hashswf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = hashswf.c; sourceTree = "<group>"; };
+		78A44E981CF69FF500C91505 /* http.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = http.h; sourceTree = "<group>"; };
+		78A44E991CF69FF500C91505 /* log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = log.c; sourceTree = "<group>"; };
+		78A44E9A1CF69FF500C91505 /* log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = log.h; sourceTree = "<group>"; };
+		78A44E9B1CF69FF500C91505 /* parseurl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = parseurl.c; sourceTree = "<group>"; };
+		78A44E9C1CF69FF500C91505 /* rtmp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = rtmp.c; sourceTree = "<group>"; };
+		78A44E9D1CF69FF500C91505 /* rtmp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtmp.h; sourceTree = "<group>"; };
+		78A44E9E1CF69FF500C91505 /* rtmp_sys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtmp_sys.h; sourceTree = "<group>"; };
+		78A44EA61CF6A0F100C91505 /* GPUImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GPUImage.xcodeproj; path = framework/GPUImage.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,19 +202,25 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78A44EB01CF6A12800C91505 /* libGPUImage.a in Frameworks */,
+				780D28DD1CE419BB004A07DE /* OpenGLES.framework in Frameworks */,
+				780D28D71CE4199F004A07DE /* AudioToolbox.framework in Frameworks */,
+				78A44E811CF69B4800C91505 /* libPLStreamingKit.a in Frameworks */,
+				78A44E6B1CF6926700C91505 /* CoreMedia.framework in Frameworks */,
+				78A44E691CF6925F00C91505 /* CFNetwork.framework in Frameworks */,
+				780D28D11CE41980004A07DE /* CoreGraphics.framework in Frameworks */,
+				780D28DF1CE419C4004A07DE /* AVFoundation.framework in Frameworks */,
+				78A44E671CF6923400C91505 /* UIKit.framework in Frameworks */,
 				780D29141CE450FD004A07DE /* libdecoder.a in Frameworks */,
 				780D29151CE450FD004A07DE /* libPLPlayerKit.a in Frameworks */,
 				780D28FD1CE41EC6004A07DE /* libc++.1.dylib in Frameworks */,
 				780D28FC1CE41EB1004A07DE /* libz.1.dylib in Frameworks */,
-				780D28DF1CE419C4004A07DE /* AVFoundation.framework in Frameworks */,
-				780D28DD1CE419BB004A07DE /* OpenGLES.framework in Frameworks */,
+				78A44E651CF691FA00C91505 /* libPLCameraStreamingKit.a in Frameworks */,
 				780D29131CE450FD004A07DE /* libcommon.a in Frameworks */,
 				780D28DB1CE419B5004A07DE /* QuartzCore.framework in Frameworks */,
 				780D28D91CE419A9004A07DE /* Accelerate.framework in Frameworks */,
-				780D28D71CE4199F004A07DE /* AudioToolbox.framework in Frameworks */,
 				780D28D51CE41998004A07DE /* CoreAudio.framework in Frameworks */,
 				780D28D31CE4198F004A07DE /* MediaPlayer.framework in Frameworks */,
-				780D28D11CE41980004A07DE /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,6 +230,10 @@
 		780D28F71CE41CB1004A07DE /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				78A44EA61CF6A0F100C91505 /* GPUImage.xcodeproj */,
+				78A44E6A1CF6926700C91505 /* CoreMedia.framework */,
+				78A44E681CF6925F00C91505 /* CFNetwork.framework */,
+				78A44E661CF6923400C91505 /* UIKit.framework */,
 				780D28FA1CE41E68004A07DE /* libc++.1.dylib */,
 				780D28F81CE41E4A004A07DE /* libz.1.dylib */,
 				780D28DE1CE419C4004A07DE /* AVFoundation.framework */,
@@ -162,6 +289,10 @@
 		783631E21CE3408300628658 = {
 			isa = PBXGroup;
 			children = (
+				78A44E8E1CF69FF500C91505 /* pili-librtmp */,
+				78A44E721CF69B4800C91505 /* LibraryStreaming */,
+				78A44E5B1CF691FA00C91505 /* LibraryCamera */,
+				78A44E301CF6919B00C91505 /* HappyDNS */,
 				780D29081CE450FD004A07DE /* Library */,
 				780D28F71CE41CB1004A07DE /* Libraries */,
 				783631ED1CE3408300628658 /* RCTPili */,
@@ -186,8 +317,188 @@
 				780D29171CE45204004A07DE /* RCTPlayerManager.m */,
 				781A256B1CE4546700C9FCF5 /* RCTPlayer.h */,
 				781A256C1CE4546700C9FCF5 /* RCTPlayer.m */,
+				78A44E6C1CF692E100C91505 /* RCTStreamingManager.h */,
+				78A44E6D1CF692E100C91505 /* RCTStreamingManager.m */,
+				78A44E6F1CF6931600C91505 /* RCTStreaming.h */,
+				78A44E701CF6931600C91505 /* RCTStreaming.m */,
 			);
 			path = RCTPili;
+			sourceTree = "<group>";
+		};
+		78A44E301CF6919B00C91505 /* HappyDNS */ = {
+			isa = PBXGroup;
+			children = (
+				78A44E311CF6919B00C91505 /* Common */,
+				78A44E3B1CF6919B00C91505 /* HappyDNS.h */,
+				78A44E3C1CF6919B00C91505 /* Http */,
+				78A44E411CF6919B00C91505 /* Local */,
+				78A44E4A1CF6919B00C91505 /* Util */,
+			);
+			path = HappyDNS;
+			sourceTree = "<group>";
+		};
+		78A44E311CF6919B00C91505 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				78A44E321CF6919B00C91505 /* QNDnsManager.h */,
+				78A44E331CF6919B00C91505 /* QNDnsManager.m */,
+				78A44E341CF6919B00C91505 /* QNDomain.h */,
+				78A44E351CF6919B00C91505 /* QNDomain.m */,
+				78A44E361CF6919B00C91505 /* QNNetworkInfo.h */,
+				78A44E371CF6919B00C91505 /* QNNetworkInfo.m */,
+				78A44E381CF6919B00C91505 /* QNRecord.h */,
+				78A44E391CF6919B00C91505 /* QNRecord.m */,
+				78A44E3A1CF6919B00C91505 /* QNResolverDelegate.h */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		78A44E3C1CF6919B00C91505 /* Http */ = {
+			isa = PBXGroup;
+			children = (
+				78A44E3D1CF6919B00C91505 /* QNDnspodEnterprise.h */,
+				78A44E3E1CF6919B00C91505 /* QNDnspodEnterprise.m */,
+				78A44E3F1CF6919B00C91505 /* QNDnspodFree.h */,
+				78A44E401CF6919B00C91505 /* QNDnspodFree.m */,
+			);
+			path = Http;
+			sourceTree = "<group>";
+		};
+		78A44E411CF6919B00C91505 /* Local */ = {
+			isa = PBXGroup;
+			children = (
+				78A44E421CF6919B00C91505 /* QNHijackingDetectWrapper.h */,
+				78A44E431CF6919B00C91505 /* QNHijackingDetectWrapper.m */,
+				78A44E441CF6919B00C91505 /* QNHosts.h */,
+				78A44E451CF6919B00C91505 /* QNHosts.m */,
+				78A44E461CF6919B00C91505 /* QNResolver.h */,
+				78A44E471CF6919B00C91505 /* QNResolver.m */,
+				78A44E481CF6919B00C91505 /* QNTxtResolver.h */,
+				78A44E491CF6919B00C91505 /* QNTxtResolver.m */,
+			);
+			path = Local;
+			sourceTree = "<group>";
+		};
+		78A44E4A1CF6919B00C91505 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				78A44E4B1CF6919B00C91505 /* QNDes.h */,
+				78A44E4C1CF6919B00C91505 /* QNDes.m */,
+				78A44E4D1CF6919B00C91505 /* QNHex.h */,
+				78A44E4E1CF6919B00C91505 /* QNHex.m */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		78A44E5B1CF691FA00C91505 /* LibraryCamera */ = {
+			isa = PBXGroup;
+			children = (
+				78A44E5C1CF691FA00C91505 /* include */,
+				78A44E631CF691FA00C91505 /* lib */,
+			);
+			path = LibraryCamera;
+			sourceTree = "<group>";
+		};
+		78A44E5C1CF691FA00C91505 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				78A44E5D1CF691FA00C91505 /* PLCameraStreamingKit */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		78A44E5D1CF691FA00C91505 /* PLCameraStreamingKit */ = {
+			isa = PBXGroup;
+			children = (
+				78A44E5E1CF691FA00C91505 /* PLAudioCaptureConfiguration.h */,
+				78A44E5F1CF691FA00C91505 /* PLCameraStreamingKit.h */,
+				78A44E601CF691FA00C91505 /* PLCameraStreamingSession.h */,
+				78A44E611CF691FA00C91505 /* PLSourceAccessProtocol.h */,
+				78A44E621CF691FA00C91505 /* PLVideoCaptureConfiguration.h */,
+			);
+			path = PLCameraStreamingKit;
+			sourceTree = "<group>";
+		};
+		78A44E631CF691FA00C91505 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				78A44E641CF691FA00C91505 /* libPLCameraStreamingKit.a */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		78A44E721CF69B4800C91505 /* LibraryStreaming */ = {
+			isa = PBXGroup;
+			children = (
+				78A44E731CF69B4800C91505 /* include */,
+				78A44E7F1CF69B4800C91505 /* lib */,
+			);
+			path = LibraryStreaming;
+			sourceTree = "<group>";
+		};
+		78A44E731CF69B4800C91505 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				78A44E741CF69B4800C91505 /* PLStreamingKit */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		78A44E741CF69B4800C91505 /* PLStreamingKit */ = {
+			isa = PBXGroup;
+			children = (
+				78A44E751CF69B4800C91505 /* PLAudioStreamingConfiguration.h */,
+				78A44E761CF69B4800C91505 /* PLBuffer.h */,
+				78A44E771CF69B4800C91505 /* PLMacroDefines.h */,
+				78A44E781CF69B4800C91505 /* PLStream.h */,
+				78A44E791CF69B4800C91505 /* PLStreamingEnv.h */,
+				78A44E7A1CF69B4800C91505 /* PLStreamingKit.h */,
+				78A44E7B1CF69B4800C91505 /* PLStreamingSession.h */,
+				78A44E7C1CF69B4800C91505 /* PLStreamStatus.h */,
+				78A44E7D1CF69B4800C91505 /* PLTypeDefines.h */,
+				78A44E7E1CF69B4800C91505 /* PLVideoStreamingConfiguration.h */,
+			);
+			path = PLStreamingKit;
+			sourceTree = "<group>";
+		};
+		78A44E7F1CF69B4800C91505 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				78A44E801CF69B4800C91505 /* libPLStreamingKit.a */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		78A44E8E1CF69FF500C91505 /* pili-librtmp */ = {
+			isa = PBXGroup;
+			children = (
+				78A44E8F1CF69FF500C91505 /* amf.c */,
+				78A44E901CF69FF500C91505 /* amf.h */,
+				78A44E911CF69FF500C91505 /* bytes.h */,
+				78A44E921CF69FF500C91505 /* dh.h */,
+				78A44E931CF69FF500C91505 /* dhgroups.h */,
+				78A44E941CF69FF500C91505 /* error.c */,
+				78A44E951CF69FF500C91505 /* error.h */,
+				78A44E961CF69FF500C91505 /* handshake.h */,
+				78A44E971CF69FF500C91505 /* hashswf.c */,
+				78A44E981CF69FF500C91505 /* http.h */,
+				78A44E991CF69FF500C91505 /* log.c */,
+				78A44E9A1CF69FF500C91505 /* log.h */,
+				78A44E9B1CF69FF500C91505 /* parseurl.c */,
+				78A44E9C1CF69FF500C91505 /* rtmp.c */,
+				78A44E9D1CF69FF500C91505 /* rtmp.h */,
+				78A44E9E1CF69FF500C91505 /* rtmp_sys.h */,
+			);
+			path = "pili-librtmp";
+			sourceTree = "<group>";
+		};
+		78A44EA71CF6A0F100C91505 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				78A44EAD1CF6A0F100C91505 /* libGPUImage.a */,
+				78A44EAF1CF6A0F100C91505 /* GPUImage.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -204,6 +515,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				78A44EB21CF6A1AD00C91505 /* PBXTargetDependency */,
 			);
 			name = RCTPili;
 			productName = RCTPili;
@@ -237,6 +549,12 @@
 			mainGroup = 783631E21CE3408300628658;
 			productRefGroup = 783631EC1CE3408300628658 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 78A44EA71CF6A0F100C91505 /* Products */;
+					ProjectRef = 78A44EA61CF6A0F100C91505 /* GPUImage.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				B6803DE21CE47D8600189A83 /* RCTPili-Universal */,
@@ -244,6 +562,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		78A44EAD1CF6A0F100C91505 /* libGPUImage.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libGPUImage.a;
+			remoteRef = 78A44EAC1CF6A0F100C91505 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		78A44EAF1CF6A0F100C91505 /* GPUImage.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = GPUImage.framework;
+			remoteRef = 78A44EAE1CF6A0F100C91505 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		B6803DE61CE47D8A00189A83 /* ShellScript */ = {
@@ -266,13 +601,41 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78A44EA01CF69FF500C91505 /* error.c in Sources */,
+				78A44EA31CF69FF500C91505 /* parseurl.c in Sources */,
+				78A44E4F1CF6919B00C91505 /* QNDnsManager.m in Sources */,
 				780D29181CE45204004A07DE /* RCTPlayerManager.m in Sources */,
+				78A44E501CF6919B00C91505 /* QNDomain.m in Sources */,
+				78A44E591CF6919B00C91505 /* QNDes.m in Sources */,
+				78A44E711CF6931600C91505 /* RCTStreaming.m in Sources */,
+				78A44EA11CF69FF500C91505 /* hashswf.c in Sources */,
 				783631F11CE3408300628658 /* RCTPili.m in Sources */,
+				78A44E521CF6919B00C91505 /* QNRecord.m in Sources */,
 				781A256D1CE4546700C9FCF5 /* RCTPlayer.m in Sources */,
+				78A44E511CF6919B00C91505 /* QNNetworkInfo.m in Sources */,
+				78A44E531CF6919B00C91505 /* QNDnspodEnterprise.m in Sources */,
+				78A44E5A1CF6919B00C91505 /* QNHex.m in Sources */,
+				78A44E571CF6919B00C91505 /* QNResolver.m in Sources */,
+				78A44E9F1CF69FF500C91505 /* amf.c in Sources */,
+				78A44E561CF6919B00C91505 /* QNHosts.m in Sources */,
+				78A44EA41CF69FF500C91505 /* rtmp.c in Sources */,
+				78A44E551CF6919B00C91505 /* QNHijackingDetectWrapper.m in Sources */,
+				78A44E581CF6919B00C91505 /* QNTxtResolver.m in Sources */,
+				78A44EA21CF69FF500C91505 /* log.c in Sources */,
+				78A44E6E1CF692E100C91505 /* RCTStreamingManager.m in Sources */,
+				78A44E541CF6919B00C91505 /* QNDnspodFree.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		78A44EB21CF6A1AD00C91505 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GPUImage;
+			targetProxy = 78A44EB11CF6A1AD00C91505 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		783631F21CE3408300628658 /* Debug */ = {
@@ -360,10 +723,14 @@
 		783631F51CE3408300628658 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../../node_modules/react-native/React/**";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../../../../node_modules/react-native/React/**",
+					"$(SRCROOT)/framework/Source/**",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)$(LOCAL_LIBRARY_DIR)/lib",
+					"$(PROJECT_DIR)$(LOCAL_LIBRARY_DIR)Streaming/lib",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -374,10 +741,14 @@
 		783631F61CE3408300628658 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../../node_modules/react-native/React/**";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../../../../node_modules/react-native/React/**",
+					"$(SRCROOT)/framework/Source/**",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)$(LOCAL_LIBRARY_DIR)/lib",
+					"$(PROJECT_DIR)$(LOCAL_LIBRARY_DIR)Streaming/lib",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";

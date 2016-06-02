@@ -5,11 +5,13 @@
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
     "65A59F5ACBA41BA8AE893E703691924D7DFA0B95" : 0,
+    "E609DD15689CC93D8F4D219EB393F30F9F726178" : 0,
     "EA4CBC069665BEB87B9C6AC1471EC716B9470118" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "E0F4188A-AFF7-43FE-B1B9-F80E572AB80E",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
     "65A59F5ACBA41BA8AE893E703691924D7DFA0B95" : "react-native-pili\/",
+    "E609DD15689CC93D8F4D219EB393F30F9F726178" : "..\/..\/GPUImage",
     "EA4CBC069665BEB87B9C6AC1471EC716B9470118" : ".."
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "RCTPili",
@@ -20,6 +22,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:buhe\/react-native-pili.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "65A59F5ACBA41BA8AE893E703691924D7DFA0B95"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/BradLarson\/GPUImage.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "E609DD15689CC93D8F4D219EB393F30F9F726178"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:buhe\/pilipili.git",
