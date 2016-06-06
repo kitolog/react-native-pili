@@ -8,9 +8,19 @@
 
 #import <UIKit/UIKit.h>
 #import "RCTView.h"
+#import "PLCameraStreamingKit.h"
+#import "Reachability.h"
+#import <asl.h>
+
 @class RCTEventDispatcher;
 
-@interface RCTStreaming : UIView
+@interface RCTStreaming : UIView<PLCameraStreamingSessionDelegate,PLStreamingSendingBufferDelegate>
+
+@property (nonatomic, strong) PLCameraStreamingSession  *session;
+@property (nonatomic, strong) dispatch_queue_t sessionQueue;
+@property (nonatomic, strong) NSArray<PLVideoCaptureConfiguration *>   *videoCaptureConfigurations;
+@property (nonatomic, strong) NSArray<PLVideoStreamingConfiguration *>   *videoStreamingConfigurations;
+@property (nonatomic, strong) Reachability *internetReachability;
 
 - (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher NS_DESIGNATED_INITIALIZER;
 

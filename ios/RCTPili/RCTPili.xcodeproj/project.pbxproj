@@ -63,6 +63,7 @@
 		78A44EA31CF69FF500C91505 /* parseurl.c in Sources */ = {isa = PBXBuildFile; fileRef = 78A44E9B1CF69FF500C91505 /* parseurl.c */; };
 		78A44EA41CF69FF500C91505 /* rtmp.c in Sources */ = {isa = PBXBuildFile; fileRef = 78A44E9C1CF69FF500C91505 /* rtmp.c */; };
 		78A44EB01CF6A12800C91505 /* libGPUImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78A44EAD1CF6A0F100C91505 /* libGPUImage.a */; };
+		78E46F1F1D055DF700D162A9 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E46F1E1D055DF700D162A9 /* Reachability.m */; };
 		78F50EB11D054067002B433C /* libresolv.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 78F50EB01D054067002B433C /* libresolv.9.dylib */; };
 		B6567F361D006BA100F06982 /* libPLCameraStreamingKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78A44E641CF691FA00C91505 /* libPLCameraStreamingKit.a */; };
 /* End PBXBuildFile section */
@@ -196,6 +197,8 @@
 		78A44E9D1CF69FF500C91505 /* rtmp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtmp.h; sourceTree = "<group>"; };
 		78A44E9E1CF69FF500C91505 /* rtmp_sys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rtmp_sys.h; sourceTree = "<group>"; };
 		78A44EA61CF6A0F100C91505 /* GPUImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GPUImage.xcodeproj; path = framework/GPUImage.xcodeproj; sourceTree = "<group>"; };
+		78E46F1D1D055DF700D162A9 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		78E46F1E1D055DF700D162A9 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		78F50EB01D054067002B433C /* libresolv.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libresolv.9.dylib; path = ../../../../../../../../usr/lib/libresolv.9.dylib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -315,6 +318,8 @@
 		783631ED1CE3408300628658 /* RCTPili */ = {
 			isa = PBXGroup;
 			children = (
+				78E46F1D1D055DF700D162A9 /* Reachability.h */,
+				78E46F1E1D055DF700D162A9 /* Reachability.m */,
 				783631EE1CE3408300628658 /* RCTPili.h */,
 				783631F01CE3408300628658 /* RCTPili.m */,
 				780D29161CE45204004A07DE /* RCTPlayerManager.h */,
@@ -615,6 +620,7 @@
 				78A44EA11CF69FF500C91505 /* hashswf.c in Sources */,
 				783631F11CE3408300628658 /* RCTPili.m in Sources */,
 				78A44E521CF6919B00C91505 /* QNRecord.m in Sources */,
+				78E46F1F1D055DF700D162A9 /* Reachability.m in Sources */,
 				781A256D1CE4546700C9FCF5 /* RCTPlayer.m in Sources */,
 				78A44E511CF6919B00C91505 /* QNNetworkInfo.m in Sources */,
 				78A44E531CF6919B00C91505 /* QNDnspodEnterprise.m in Sources */,
