@@ -50,7 +50,6 @@
 		78A44E581CF6919B00C91505 /* QNTxtResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A44E491CF6919B00C91505 /* QNTxtResolver.m */; };
 		78A44E591CF6919B00C91505 /* QNDes.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A44E4C1CF6919B00C91505 /* QNDes.m */; };
 		78A44E5A1CF6919B00C91505 /* QNHex.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A44E4E1CF6919B00C91505 /* QNHex.m */; };
-		78A44E651CF691FA00C91505 /* libPLCameraStreamingKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78A44E641CF691FA00C91505 /* libPLCameraStreamingKit.a */; };
 		78A44E671CF6923400C91505 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78A44E661CF6923400C91505 /* UIKit.framework */; };
 		78A44E691CF6925F00C91505 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78A44E681CF6925F00C91505 /* CFNetwork.framework */; };
 		78A44E6B1CF6926700C91505 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78A44E6A1CF6926700C91505 /* CoreMedia.framework */; };
@@ -64,6 +63,7 @@
 		78A44EA31CF69FF500C91505 /* parseurl.c in Sources */ = {isa = PBXBuildFile; fileRef = 78A44E9B1CF69FF500C91505 /* parseurl.c */; };
 		78A44EA41CF69FF500C91505 /* rtmp.c in Sources */ = {isa = PBXBuildFile; fileRef = 78A44E9C1CF69FF500C91505 /* rtmp.c */; };
 		78A44EB01CF6A12800C91505 /* libGPUImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78A44EAD1CF6A0F100C91505 /* libGPUImage.a */; };
+		B6567F361D006BA100F06982 /* libPLCameraStreamingKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78A44E641CF691FA00C91505 /* libPLCameraStreamingKit.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -202,6 +202,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6567F361D006BA100F06982 /* libPLCameraStreamingKit.a in Frameworks */,
 				78A44EB01CF6A12800C91505 /* libGPUImage.a in Frameworks */,
 				780D28DD1CE419BB004A07DE /* OpenGLES.framework in Frameworks */,
 				780D28D71CE4199F004A07DE /* AudioToolbox.framework in Frameworks */,
@@ -215,7 +216,6 @@
 				780D29151CE450FD004A07DE /* libPLPlayerKit.a in Frameworks */,
 				780D28FD1CE41EC6004A07DE /* libc++.1.dylib in Frameworks */,
 				780D28FC1CE41EB1004A07DE /* libz.1.dylib in Frameworks */,
-				78A44E651CF691FA00C91505 /* libPLCameraStreamingKit.a in Frameworks */,
 				780D29131CE450FD004A07DE /* libcommon.a in Frameworks */,
 				780D28DB1CE419B5004A07DE /* QuartzCore.framework in Frameworks */,
 				780D28D91CE419A9004A07DE /* Accelerate.framework in Frameworks */,
@@ -731,6 +731,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)$(LOCAL_LIBRARY_DIR)/lib",
 					"$(PROJECT_DIR)$(LOCAL_LIBRARY_DIR)Streaming/lib",
+					"$(PROJECT_DIR)$(LOCAL_LIBRARY_DIR)Camera/lib",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -749,6 +750,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)$(LOCAL_LIBRARY_DIR)/lib",
 					"$(PROJECT_DIR)$(LOCAL_LIBRARY_DIR)Streaming/lib",
+					"$(PROJECT_DIR)$(LOCAL_LIBRARY_DIR)Camera/lib",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
