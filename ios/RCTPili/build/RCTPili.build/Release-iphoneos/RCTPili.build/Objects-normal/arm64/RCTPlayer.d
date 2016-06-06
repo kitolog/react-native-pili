@@ -1,6 +1,8 @@
 dependencies: \
   /Users/guguyanhua/github/pilipili/node_modules/react-native-pili/ios/RCTPili/RCTPili/RCTPlayer.m \
   /Users/guguyanhua/github/pilipili/node_modules/react-native-pili/ios/RCTPili/RCTPili/RCTPlayer.h \
+  framework/Source/iOS/Framework/module.modulemap \
+  /Users/guguyanhua/github/pilipili/node_modules/react-native-pili/ios/RCTPili/framework/Source/iOS/Framework/module.modulemap \
   ../../../../node_modules/react-native/React/Views/RCTView.h \
   ../../../../node_modules/react-native/React/Views/RCTBorderStyle.h \
   ../../../../node_modules/react-native/React/Views/RCTComponent.h \
@@ -14,4 +16,5 @@ dependencies: \
   ../../../../node_modules/react-native/React/Base/RCTBridgeDelegate.h \
   ../../../../node_modules/react-native/React/Base/RCTFrameUpdate.h \
   ../../../../node_modules/react-native/React/Base/RCTInvalidating.h \
-  ../../../../node_modules/react-native/React/Base/RCTJavaScriptExecutor.h
+  ../../../../node_modules/react-native/React/Base/RCTJavaScriptExecutor.h \
+  ../../../../node_modules/react-native/React/Views/UIView+React.h
