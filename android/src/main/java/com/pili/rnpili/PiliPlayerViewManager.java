@@ -35,6 +35,8 @@ public class PiliPlayerViewManager extends SimpleViewManager<PLVideoView> implem
     private static final int MEDIA_INFO_BUFFERING_END = 702;
     private static final int MEDIA_INFO_AUDIO_RENDERING_START = 10002;
     private boolean started;
+    private int aspectRatio;
+    mVideoView.setDisplayAspectRatio(mDisplayAspectRatio);
 
     public enum Events {
         //        READY("onReady"),
@@ -140,6 +142,21 @@ public class PiliPlayerViewManager extends SimpleViewManager<PLVideoView> implem
 
     }
 
+    @ReactProp(name = "aspectRatio")
+    public void setAspectRatio(PLVideoView mVideoView, int aspectRatio) {
+        /**
+         *  ASPECT_RATIO_ORIGIN = 0;
+         *  ASPECT_RATIO_FIT_PARENT = 1
+         *  ASPECT_RATIO_PAVED_PARENT = 2
+         *  ASPECT_RATIO_16_9 = 3
+         *  ASPECT_RATIO_4_3 = 4
+         */
+        this.aspectRatio = aspectRatio;
+        if (aspectRatio) {
+            mVideoView.setDisplayAspectRatio(aspectRatio);
+        }
+    }
+
     @ReactProp(name = "started")
     public void setStarted(PLVideoView mVideoView, boolean started) {
         this.started = started;
@@ -160,7 +177,7 @@ public class PiliPlayerViewManager extends SimpleViewManager<PLVideoView> implem
     private PLMediaPlayer.OnPreparedListener mOnPreparedListener = new PLMediaPlayer.OnPreparedListener() {
         @Override
         public void onPrepared(PLMediaPlayer plMediaPlayer) {
-            Log.d(TAG, "onPrepared ! ");
+            Log.d(TAG, "onPrepared ! ");PLVideoView
             mEventEmitter.receiveEvent(getTargetId(), Events.LOADING.toString(), Arguments.createMap());
         }
     };
