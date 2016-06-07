@@ -177,7 +177,7 @@ public class PiliPlayerViewManager extends SimpleViewManager<PLVideoView> implem
     private PLMediaPlayer.OnPreparedListener mOnPreparedListener = new PLMediaPlayer.OnPreparedListener() {
         @Override
         public void onPrepared(PLMediaPlayer plMediaPlayer) {
-            Log.d(TAG, "onPrepared ! ");PLVideoView
+            Log.d(TAG, "onPrepared ! ");
             mEventEmitter.receiveEvent(getTargetId(), Events.LOADING.toString(), Arguments.createMap());
         }
     };
