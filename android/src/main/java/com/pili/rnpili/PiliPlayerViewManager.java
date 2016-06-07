@@ -151,9 +151,7 @@ public class PiliPlayerViewManager extends SimpleViewManager<PLVideoView> implem
          *  ASPECT_RATIO_4_3 = 4
          */
         this.aspectRatio = aspectRatio;
-        if (aspectRatio) {
-            mVideoView.setDisplayAspectRatio(aspectRatio);
-        }
+        mVideoView.setDisplayAspectRatio(aspectRatio);
     }
 
     @ReactProp(name = "started")

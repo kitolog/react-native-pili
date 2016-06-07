@@ -68,7 +68,7 @@ Player.propTypes = {
   }).isRequired,
   started:PropTypes.bool,
   muted:PropTypes.bool, //iOS only
-  aspectRatio: PropTypes.number,
+  aspectRatio: PropTypes.oneOf([0, 1, 2, 3, 4]),
   onLoading: PropTypes.func,
   onPaused: PropTypes.func,
   onShutdown: PropTypes.func,
