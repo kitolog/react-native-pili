@@ -36,7 +36,6 @@ public class PiliPlayerViewManager extends SimpleViewManager<PLVideoView> implem
     private static final int MEDIA_INFO_AUDIO_RENDERING_START = 10002;
     private boolean started;
     private int aspectRatio;
-    mVideoView.setDisplayAspectRatio(mDisplayAspectRatio);
 
     public enum Events {
         //        READY("onReady"),
