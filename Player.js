@@ -80,14 +80,3 @@ Player.propTypes = {
 const RCTPlayer = requireNativeComponent('RCTPlayer', Player);
 
 module.exports = Player;
-
-//var iface = {
-//      propTypes: {
-//        ...View.propTypes,
-//      source: PropTypes.object,
-//      started:PropTypes.bool,
-//      muted:PropTypes.bool, //iOS only
-//    },
-//    };
-//
-//module.exports = requireNativeComponent('RCTPlayer', iface);

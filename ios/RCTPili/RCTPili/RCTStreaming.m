@@ -243,6 +243,31 @@ const char *networkStatus[] = {
 - (void)cameraStreamingSession:(PLCameraStreamingSession *)session streamStateDidChange:(PLStreamState)state {
     NSString *log = [NSString stringWithFormat:@"Stream State: %s", stateNames[state]];
     NSLog(@"%@", log);
+    
+    switch (state) {
+        case PLStreamStateUnknow:
+            [_eventDispatcher sendInputEventWithName:@"onLoading" body:@{@"target": self.reactTag}];
+            break;
+        case PLStreamStateConnecting:
+            [_eventDispatcher sendInputEventWithName:@"onConnecting" body:@{@"target": self.reactTag}];
+            break;
+        case PLStreamStateConnected:
+            [_eventDispatcher sendInputEventWithName:@"onStreaming" body:@{@"target": self.reactTag}];
+            break;
+        case PLStreamStateDisconnecting:
+            
+            break;
+        case PLStreamStateDisconnected:
+            [_eventDispatcher sendInputEventWithName:@"onDisconnected" body:@{@"target": self.reactTag}];
+            [_eventDispatcher sendInputEventWithName:@"onShutdown" body:@{@"target": self.reactTag}]; //FIXME
+            break;
+        case PLStreamStateError:
+            [_eventDispatcher sendInputEventWithName:@"onIOError" body:@{@"target": self.reactTag}];
+            break;
+        default:
+            break;
+    }
+
 }
 - (void)cameraStreamingSession:(PLCameraStreamingSession *)session didDisconnectWithError:(NSError *)error {
     NSString *log = [NSString stringWithFormat:@"Stream State: Error. %@", error];

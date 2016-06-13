@@ -19,6 +19,18 @@ RCT_EXPORT_MODULE();
     return [[RCTStreaming alloc] initWithEventDispatcher:self.bridge.eventDispatcher];
 }
 
+- (NSArray *)customDirectEventTypes
+{
+    return @[
+             @"onReady",
+             @"onConnecting",
+             @"onStreaming",
+             @"onShutdown",
+             @"onIOError",
+             @"onDisconnected"
+             ];
+}
+
 - (dispatch_queue_t)methodQueue
 {
     return dispatch_get_main_queue();

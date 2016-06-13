@@ -116,7 +116,6 @@ static NSString *status[] = {
 #pragma mark - <PLPlayerDelegate>
 
 - (void)player:(nonnull PLPlayer *)player statusDidChange:(PLPlayerStatus)state {
-    //TODO - send event
     switch (state) {
         case PLPlayerStatusCaching:
             [_eventDispatcher sendInputEventWithName:@"onLoading" body:@{@"target": self.reactTag}];
