@@ -1,6 +1,9 @@
 package com.pili.rnpili;
 
 import android.util.Log;
+import android.view.Gravity;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.LifecycleEventListener;
@@ -23,7 +26,7 @@ import javax.annotation.Nullable;
 /**
  * Created by buhe on 16/4/29.
  */
-public class PiliPlayerViewManager extends SimpleViewManager<PLVideoView> implements LifecycleEventListener {
+public class PiliPlayerViewManager extends SimpleViewManager<FrameLayout> implements LifecycleEventListener {
     private ThemedReactContext reactContext;
     private static final String TAG = PiliPlayerViewManager.class.getSimpleName();
     private PLVideoView mVideoView;
@@ -38,7 +41,6 @@ public class PiliPlayerViewManager extends SimpleViewManager<PLVideoView> implem
     private int aspectRatio;
 
     public enum Events {
-        //        READY("onReady"),
         LOADING("onLoading"),
         PAUSE("onPaused"),
         SHUTDOWN("onShutdown"),
@@ -73,8 +75,9 @@ public class PiliPlayerViewManager extends SimpleViewManager<PLVideoView> implem
     }
 
     @Override
-    protected PLVideoView createViewInstance(ThemedReactContext reactContext) {
+    protected FrameLayout createViewInstance(ThemedReactContext reactContext) {
         this.reactContext = reactContext;
+        FrameLayout frameLayout = new FrameLayout(reactContext);
         mEventEmitter = reactContext.getJSModule(RCTEventEmitter.class);
         mVideoView = new PLVideoView(reactContext);
         // Set some listeners
@@ -86,8 +89,14 @@ public class PiliPlayerViewManager extends SimpleViewManager<PLVideoView> implem
         mVideoView.setOnSeekCompleteListener(mOnSeekCompleteListener);
         mVideoView.setOnErrorListener(mOnErrorListener);
 
+        frameLayout.addView(mVideoView,new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                Gravity.CENTER
+        ));
+
         reactContext.addLifecycleEventListener(this);
-        return mVideoView;
+        return frameLayout;
     }
 
     private boolean isLiveStreaming(String url) {
@@ -100,7 +109,7 @@ public class PiliPlayerViewManager extends SimpleViewManager<PLVideoView> implem
     }
 
     @ReactProp(name = "source")
-    public void setSource(PLVideoView mVideoView, ReadableMap source) {
+    public void setSource(FrameLayout frameLayout, ReadableMap source) {
         AVOptions options = new AVOptions();
         String uri = source.getString("uri");
         boolean mediaController = source.hasKey("controller") && source.getBoolean("controller");
@@ -142,7 +151,7 @@ public class PiliPlayerViewManager extends SimpleViewManager<PLVideoView> implem
     }
 
     @ReactProp(name = "aspectRatio")
-    public void setAspectRatio(PLVideoView mVideoView, int aspectRatio) {
+    public void setAspectRatio(FrameLayout frameLayout, int aspectRatio) {
         /**
          *  ASPECT_RATIO_ORIGIN = 0;
          *  ASPECT_RATIO_FIT_PARENT = 1
@@ -155,7 +164,7 @@ public class PiliPlayerViewManager extends SimpleViewManager<PLVideoView> implem
     }
 
     @ReactProp(name = "started")
-    public void setStarted(PLVideoView mVideoView, boolean started) {
+    public void setStarted(FrameLayout frameLayout,  boolean started) {
         this.started = started;
         if (started) {
             mVideoView.start();
@@ -166,7 +175,7 @@ public class PiliPlayerViewManager extends SimpleViewManager<PLVideoView> implem
     }
 
     @ReactProp(name = "muted")
-    public void setMuted(PLVideoView mVideoView, boolean muted){
+    public void setMuted(FrameLayout frameLayout, boolean muted){
 //        mVideoView.mute
         //Android not implements
     }
