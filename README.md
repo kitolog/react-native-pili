@@ -43,10 +43,13 @@ Modify getPackages method
 
 
 ##TODO
-- [x] Android Player 70%
-- [x] Android Streaming 90%
-- [x] iOS Player 70%
-- [ ] iOS Streaming 
+- [x] Android Player
+- [x] Android Streaming
+- [x] iOS Player
+- [x] iOS Streaming
+- [ ] 美颜和水印支持
+- [ ] 单元测试
+- [ ] 自定义实时滤镜支持
 
 ##Usage
 ###1. 推流
@@ -113,3 +116,10 @@ Modify getPackages method
     onPlaying={()=>{}} //play event
     />
 ```
+##Release Note
+##0.1.0
+- [x] Android Player
+- [x] Android Streaming
+- [x] iOS Player
+- [x] iOS Streaming 
+实现了所有基本 API ,处于可以尝试使用阶段，后续会用实际项目推动 SDK 完善

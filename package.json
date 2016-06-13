@@ -1,6 +1,6 @@
 {
   "name": "react-native-pili",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Pili Streaming Cloud React Native SDK",
   "main": "index.js",
   "scripts": {
