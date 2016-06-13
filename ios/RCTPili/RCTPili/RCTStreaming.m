@@ -14,6 +14,9 @@
 
 @implementation RCTStreaming{
     RCTEventDispatcher *_eventDispatcher;
+    BOOL _started;
+    BOOL _muted;
+    BOOL _focus;
 }
 
 const char *stateNames[] = {
@@ -33,22 +36,16 @@ const char *networkStatus[] = {
 
 
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
 
 - (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher
 {
     if ((self = [super init])) {
         [PLStreamingEnv initEnv];
         _eventDispatcher = eventDispatcher;
-//        _started = YES;
-//        _muted = NO;
-//        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+        _started = YES;
+        _muted = NO;
+        _focus = NO;
+
 //        self.reconnectCount = 0;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
         self.internetReachability = [Reachability reachabilityForInternetConnection];
@@ -83,79 +80,143 @@ const char *networkStatus[] = {
 
 - (void) setStream:(NSDictionary *)source
 {
-    [source setValue:@(NO) forKey:@"disabled"];
-    [source setValue:@[@"480p", @"720p"] forKey:@"profiles"];
-    PLStream *stream = [PLStream streamWithJSON:source];
-    void (^permissionBlock)(void) = ^{
-        dispatch_async(self.sessionQueue, ^{
-            PLVideoCaptureConfiguration *videoCaptureConfiguration = [self.videoCaptureConfigurations lastObject];
-            PLAudioCaptureConfiguration *audioCaptureConfiguration = [PLAudioCaptureConfiguration defaultConfiguration];
-            // 视频编码配置
-            PLVideoStreamingConfiguration *videoStreamingConfiguration = [self.videoStreamingConfigurations lastObject];
-            // 音频编码配置
-            PLAudioStreamingConfiguration *audioStreamingConfiguration = [PLAudioStreamingConfiguration defaultConfiguration];
-            AVCaptureVideoOrientation orientation = (AVCaptureVideoOrientation)(([[UIDevice currentDevice] orientation] <= UIDeviceOrientationLandscapeRight && [[UIDevice currentDevice] orientation] != UIDeviceOrientationUnknown) ? [[UIDevice currentDevice] orientation]: UIDeviceOrientationPortrait);
-            // 推流 session
-            self.session = [[PLCameraStreamingSession alloc] initWithVideoCaptureConfiguration:videoCaptureConfiguration audioCaptureConfiguration:audioCaptureConfiguration videoStreamingConfiguration:videoStreamingConfiguration audioStreamingConfiguration:audioStreamingConfiguration stream:stream videoOrientation:orientation];
-            self.session.delegate = self;
-            self.session.bufferDelegate = self;
-//            UIImage *waterMark = [UIImage imageNamed:@"qiniu.png"];
-//            PLFilterHandler handler = [self.session addWaterMark:waterMark origin:CGPointMake(100, 300)];
-//            self.filterHandlers = [@[handler] mutableCopy];//TODO -  水印暂时注释
-            dispatch_async(dispatch_get_main_queue(), ^{
-                UIView *previewView = self.session.previewView;
-                [self addSubview:previewView];
-                [previewView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    _source = source;//FIXME
+    [self setSourceAndProfile];
+}
+
+- (void)setProfile:(NSDictionary *)profile{
+    _profile = profile;//FIXME
+    [self setSourceAndProfile];
+}
+
+- (void) setSourceAndProfile{
+    if(self.profile && self.source){
+        
+        
+        PLStream *stream = [PLStream streamWithJSON:self.source];
+        void (^permissionBlock)(void) = ^{
+            dispatch_async(self.sessionQueue, ^{
+                NSDictionary *video = self.profile[@"video"];
+                NSDictionary *audio = self.profile[@"audio"];
                 
-                NSLayoutConstraint *centerX = [NSLayoutConstraint constraintWithItem:previewView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0];
-                NSLayoutConstraint *centerY = [NSLayoutConstraint constraintWithItem:previewView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0];
-                NSLayoutConstraint *width = [NSLayoutConstraint constraintWithItem:previewView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0];
-                NSLayoutConstraint *height = [NSLayoutConstraint constraintWithItem:previewView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0];
+                int *fps = [video[@"fps"] integerValue];
+                int *bps = [video[@"bps"] integerValue];
+                int *maxFrameInterval = [video[@"maxFrameInterval"] integerValue];
+                //TODO
+                double height = 800;
+                double width = 640;
                 
-                NSArray *constraints = [NSArray arrayWithObjects:centerX, centerY,width,height, nil];
-                [self addConstraints: constraints];
+                //TODO videoProfileLevel 需要通过 分辨率 选择
                 
-                NSString *log = [NSString stringWithFormat:@"Zoom Range: [1..%.0f]", self.session.videoActiveFormat.videoMaxZoomFactor];
-                NSLog(@"%@", log);
-                [self startSession];
+                PLVideoStreamingConfiguration *videoStreamingConfiguration = [[PLVideoStreamingConfiguration alloc] initWithVideoSize:CGSizeMake(width, height) expectedSourceVideoFrameRate:fps videoMaxKeyframeInterval:maxFrameInterval averageVideoBitRate:bps videoProfileLevel:AVVideoProfileLevelH264Baseline31];
+                
+                PLVideoCaptureConfiguration *videoCaptureConfiguration = [[PLVideoCaptureConfiguration alloc] initWithVideoFrameRate:fps sessionPreset:AVCaptureSessionPresetiFrame960x540 horizontallyMirrorFrontFacingCamera:YES horizontallyMirrorRearFacingCamera:NO];
+//                PLVideoCaptureConfiguration *videoCaptureConfiguration = [PLVideoCaptureConfiguration defaultConfiguration];
+                PLAudioCaptureConfiguration *audioCaptureConfiguration = [PLAudioCaptureConfiguration defaultConfiguration];
+                // 视频编码配置
+//                PLVideoStreamingConfiguration *videoStreamingConfiguration = [PLVideoStreamingConfiguration defaultConfiguration];
+                // 音频编码配置
+                PLAudioStreamingConfiguration *audioStreamingConfiguration = [PLAudioStreamingConfiguration defaultConfiguration];
+                AVCaptureVideoOrientation orientation = (AVCaptureVideoOrientation)(([[UIDevice currentDevice] orientation] <= UIDeviceOrientationLandscapeRight && [[UIDevice currentDevice] orientation] != UIDeviceOrientationUnknown) ? [[UIDevice currentDevice] orientation]: UIDeviceOrientationPortrait);
+                // 推流 session
+                self.session = [[PLCameraStreamingSession alloc] initWithVideoCaptureConfiguration:videoCaptureConfiguration audioCaptureConfiguration:audioCaptureConfiguration videoStreamingConfiguration:videoStreamingConfiguration audioStreamingConfiguration:audioStreamingConfiguration stream:stream videoOrientation:orientation];
+                self.session.delegate = self;
+                self.session.bufferDelegate = self;
+                //            UIImage *waterMark = [UIImage imageNamed:@"qiniu.png"];
+                //            PLFilterHandler handler = [self.session addWaterMark:waterMark origin:CGPointMake(100, 300)];
+                //            self.filterHandlers = [@[handler] mutableCopy];//TODO -  水印暂时注释
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    UIView *previewView = self.session.previewView;
+                    [self addSubview:previewView];
+                    [previewView setTranslatesAutoresizingMaskIntoConstraints:NO];
+                    
+                    NSLayoutConstraint *centerX = [NSLayoutConstraint constraintWithItem:previewView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0];
+                    NSLayoutConstraint *centerY = [NSLayoutConstraint constraintWithItem:previewView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0];
+                    NSLayoutConstraint *width = [NSLayoutConstraint constraintWithItem:previewView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0];
+                    NSLayoutConstraint *height = [NSLayoutConstraint constraintWithItem:previewView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0];
+                    
+                    NSArray *constraints = [NSArray arrayWithObjects:centerX, centerY,width,height, nil];
+                    [self addConstraints: constraints];
+                    
+                    NSString *log = [NSString stringWithFormat:@"Zoom Range: [1..%.0f]", self.session.videoActiveFormat.videoMaxZoomFactor];
+                    NSLog(@"%@", log);
+                    
+                    if(_focus){
+                        [self.session setSmoothAutoFocusEnabled:_focus];
+                        [self.session setTouchToFocusEnable:_focus];
+                    }
+                    
+                    if(_muted){
+                        [self setMuted:_muted];
+                    }
+                    
+                    [self startSession];
+                });
             });
-        });
-    };
-    void (^noAccessBlock)(void) = ^{
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No Access", nil)
-                                                            message:NSLocalizedString(@"!", nil)
-                                                           delegate:nil
-                                                  cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
-                                                  otherButtonTitles:nil];
-        [alertView show];
-    };
-    
-    switch ([PLCameraStreamingSession cameraAuthorizationStatus]) {
-        case PLAuthorizationStatusAuthorized:
-            permissionBlock();
-            break;
-        case PLAuthorizationStatusNotDetermined: {
-            [PLCameraStreamingSession requestCameraAccessWithCompletionHandler:^(BOOL granted) {
-                granted ? permissionBlock() : noAccessBlock();
-            }];
+        };
+        void (^noAccessBlock)(void) = ^{
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No Access", nil)
+                                                                message:NSLocalizedString(@"!", nil)
+                                                               delegate:nil
+                                                      cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                      otherButtonTitles:nil];
+            [alertView show];
+        };
+        
+        switch ([PLCameraStreamingSession cameraAuthorizationStatus]) {
+            case PLAuthorizationStatusAuthorized:
+                permissionBlock();
+                break;
+            case PLAuthorizationStatusNotDetermined: {
+                [PLCameraStreamingSession requestCameraAccessWithCompletionHandler:^(BOOL granted) {
+                    granted ? permissionBlock() : noAccessBlock();
+                }];
+            }
+                break;
+            default:
+                noAccessBlock();
+                break;
         }
-            break;
-        default:
-            noAccessBlock();
-            break;
+
     }
 }
+
+- (void)setStarted:(BOOL) started {
+    if(started != _started){
+        if(started){
+            [self startSession];
+            _started = started;
+        }else{
+            [self stopSession];
+            _started = started;
+        }
+    }
+}
+
+-(void)setMuted:(BOOL) muted {
+    _muted = muted;
+    [self.session setMuted:muted];
+}
+
+-(void)setFocus:(BOOL) focus {
+    _focus = focus;
+    [self.session setSmoothAutoFocusEnabled:focus];
+    [self.session setTouchToFocusEnable:focus];
+}
+
+-(void)setZoom:(NSNumber*) zoom {
+    self.session.videoZoomFactor = [zoom integerValue];
+}
+
 
 - (void)streamingSessionSendingBufferDidFull:(id)session {
     NSString *log = @"Buffer is full";
     NSLog(@"%@", log);
-//    self.textView.text = [NSString stringWithFormat:@"%@\%@", self.textView.text, log];
 }
 
 - (void)streamingSession:(id)session sendingBufferDidDropItems:(NSArray *)items {
     NSString *log = @"Frame dropped";
     NSLog(@"%@", log);
-//    self.textView.text = [NSString stringWithFormat:@"%@\%@", self.textView.text, log];
 }
 
 
@@ -182,23 +243,10 @@ const char *networkStatus[] = {
 - (void)cameraStreamingSession:(PLCameraStreamingSession *)session streamStateDidChange:(PLStreamState)state {
     NSString *log = [NSString stringWithFormat:@"Stream State: %s", stateNames[state]];
     NSLog(@"%@", log);
-//    self.textView.text = [NSString stringWithFormat:@"%@\%@", self.textView.text, log];
-    
-    // 除 PLStreamStateError 外的其余状态会回调在这个方法
-    // 这个回调会确保在主线程，所以可以直接对 UI 做操作
-//    if (PLStreamStateConnected == state) {
-//        [self.actionButton setTitle:NSLocalizedString(@"Stop", nil) forState:UIControlStateNormal];
-//    } else if (PLStreamStateDisconnected == state) {
-//        [self.actionButton setTitle:NSLocalizedString(@"Start", nil) forState:UIControlStateNormal];
-//    }
 }
 - (void)cameraStreamingSession:(PLCameraStreamingSession *)session didDisconnectWithError:(NSError *)error {
     NSString *log = [NSString stringWithFormat:@"Stream State: Error. %@", error];
     NSLog(@"%@", log);
-//    self.textView.text = [NSString stringWithFormat:@"%@\%@", self.textView.text, log];
-    // PLStreamStateError 都会回调在这个方法
-    // 尝试重连，注意这里需要你自己来处理重连尝试的次数以及重连的时间间隔
-//    [self.actionButton setTitle:NSLocalizedString(@"Reconnecting", nil) forState:UIControlStateNormal];
     [self startSession];
 }
 
@@ -214,7 +262,6 @@ const char *networkStatus[] = {
     
     NSString *log = [NSString stringWithFormat:@"Networkt Status: %s", networkStatus[status]];
     NSLog(@"%@", log);
-//    self.textView.text = [NSString stringWithFormat:@"%@\%@", self.textView.text, log];
 }
 
 - (void)handleInterruption:(NSNotification *)notification {

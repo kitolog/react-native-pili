@@ -21,6 +21,8 @@
 @property (nonatomic, strong) NSArray<PLVideoCaptureConfiguration *>   *videoCaptureConfigurations;
 @property (nonatomic, strong) NSArray<PLVideoStreamingConfiguration *>   *videoStreamingConfigurations;
 @property (nonatomic, strong) Reachability *internetReachability;
+@property (nonatomic, strong) NSDictionary  *profile;
+@property (nonatomic, strong) NSDictionary  *source;
 
 - (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher NS_DESIGNATED_INITIALIZER;
 
