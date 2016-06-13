@@ -136,8 +136,7 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
             microphoneSetting = new MicrophoneStreamingSetting();
             microphoneSetting.setBluetoothSCOEnabled(false);
 
-            boolean result = mCameraStreamingManager.prepare(setting, microphoneSetting, mProfile);
-//            setFocusAreaIndicator();
+            mCameraStreamingManager.prepare(setting, microphoneSetting, mProfile);
             mCameraStreamingManager.setStreamingStateListener(this);
             mCameraStreamingManager.setStreamingSessionListener(this);
             context.addLifecycleEventListener(this);
@@ -214,21 +213,17 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
 
     }
 
-    @ReactProp(name = "settings")
-    public void setSettings(AspectFrameLayout view, @Nullable ReadableMap settings) {
-
-    }
-
     @ReactProp(name = "muted")
     public void setMuted(AspectFrameLayout view, boolean muted) {
         mCameraStreamingManager.mute(muted);
     }
 
     @ReactProp(name = "zoom")
-    //0 ~ 1
-    public void setZoom(AspectFrameLayout view, float factor) {
-        compute(factor);
-        mCameraStreamingManager.setZoomValue(mCurrentZoom);
+    public void setZoom(AspectFrameLayout view, int zoom) {
+        mCurrentZoom = zoom;
+        mCurrentZoom = Math.min(mCurrentZoom, mMaxZoom);
+        mCurrentZoom = Math.max(0, mCurrentZoom);
+        mCameraStreamingManager.setZoomValue(zoom);
     }
 
     @ReactProp(name = "focus")
@@ -384,22 +379,19 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
     @Override
     public boolean onZoomValueChanged(float factor) {
         if (mIsReady && mCameraStreamingManager.isZoomSupported()) {
-            compute(factor);
+            mCurrentZoom = (int) (mMaxZoom * factor);
+            mCurrentZoom = Math.min(mCurrentZoom, mMaxZoom);
+            mCurrentZoom = Math.max(0, mCurrentZoom);
+
             Log.d(TAG, "zoom ongoing, scale: " + mCurrentZoom + ",factor:" + factor + ",maxZoom:" + mMaxZoom);
             if (!mHandler.hasMessages(MSG_SET_ZOOM)) {
                 mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_SET_ZOOM), ZOOM_MINIMUM_WAIT_MILLIS);
                 return true;
             }
         }
-        Log.d(TAG, "zoom ongoing, scale: " + mCurrentZoom + ",factor:" + factor + ",maxZoom:" + mMaxZoom);
         return false;
     }
 
-    private void compute(float factor) {
-        mCurrentZoom = (int) (mMaxZoom * factor);
-        mCurrentZoom = Math.min(mCurrentZoom, mMaxZoom);
-        mCurrentZoom = Math.max(0, mCurrentZoom);
-    }
 
     @Override
     public boolean onStateHandled(final int state, Object extra) {
