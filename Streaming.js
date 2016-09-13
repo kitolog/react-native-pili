@@ -1,13 +1,18 @@
 /**
  * Created by buhe on 16/4/29.
  */
+import React from 'react';
+import ReactNative from 'react-native';
 
-import React , {
-    requireNativeComponent,
-    PropTypes,
-    View,
-    Component
-} from 'react-native';
+const {
+  Component,
+  PropTypes
+} = React;
+
+const {
+  requireNativeComponent,
+  View
+} = ReactNative;
 
 class Streaming extends Component {
 
