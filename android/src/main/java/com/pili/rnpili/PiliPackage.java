@@ -1,6 +1,6 @@
 package com.pili.rnpili;
 
-import android.app.Activity;
+import android.app.Context;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.JavaScriptModule;
@@ -18,11 +18,11 @@ import java.util.List;
  */
 public class PiliPackage implements ReactPackage {
 
-    private Activity activity;
+    private Context context;
 
-    public PiliPackage(Activity activity) {
-        StreamingEnv.init(activity);
-        this.activity = activity;
+    public PiliPackage(Context context) {
+        StreamingEnv.init(context);
+        this.context = context;
     }
 
     @Override
