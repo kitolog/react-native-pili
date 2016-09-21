@@ -1,6 +1,6 @@
 package com.pili.rnpili;
 
-import android.app.Context;
+import android.content.Context;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.JavaScriptModule;
