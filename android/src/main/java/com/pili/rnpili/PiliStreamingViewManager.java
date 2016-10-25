@@ -102,7 +102,7 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
 
 
     private void initializeStreamingSessionIfNeeded(AspectFrameLayout afl, CameraPreviewFrameView previewFrameView) {
-        if (mCameraStreamingManager == null) {
+        //if (mCameraStreamingManager == null) {
             mCameraStreamingManager = new CameraStreamingManager(
                     context,
                     afl,
@@ -141,7 +141,9 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
             mCameraStreamingManager.setStreamingSessionListener(this);
             context.addLifecycleEventListener(this);
 
-        }
+ /*       }else{
+            mCameraStreamingManager.a(2, previewFrameView, true);
+        }*/
     }
 
     @Override
@@ -177,6 +179,7 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
 
             @Override
             public void onViewDetachedFromWindow(View v) {
+                mCameraStreamingManager.stopStreaming();
                 mCameraStreamingManager.destroy();
             }
         });
@@ -233,7 +236,7 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
 
     @ReactProp(name = "started")
     public void setStarted(AspectFrameLayout view, boolean started) {
-        if(this.started == started){
+        if (this.started == started) {
             //ignore
             return;
         }
@@ -280,6 +283,8 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
                 mMaxZoom = mCameraStreamingManager.getMaxZoom();
                 if (started) {
                     startStreaming();
+                }else{
+                    stopStreaming();
                 }
                 mEventEmitter.receiveEvent(getTargetId(), Events.READY.toString(), Arguments.createMap());
                 break;
@@ -294,7 +299,7 @@ public class PiliStreamingViewManager extends SimpleViewManager<AspectFrameLayou
                 break;
             case CameraStreamingManager.STATE.IOERROR:
                 mEventEmitter.receiveEvent(getTargetId(), Events.IOERROR.toString(), Arguments.createMap());
-                break;
+            break;
             case CameraStreamingManager.STATE.UNKNOWN:
                 break;
             case CameraStreamingManager.STATE.SENDING_BUFFER_EMPTY:
